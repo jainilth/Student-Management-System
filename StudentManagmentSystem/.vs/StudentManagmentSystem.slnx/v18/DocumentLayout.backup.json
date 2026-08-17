@@ -1,0 +1,137 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\models\\academicprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:models\\academicprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\models\\semester.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:models\\semester.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Semester.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\Semester.cs",
+              "RelativeDocumentMoniker": "Models\\Semester.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\Semester.cs",
+              "RelativeToolTip": "Models\\Semester.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T02:59:35.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AcademicProgram.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\AcademicProgram.cs",
+              "RelativeDocumentMoniker": "Models\\AcademicProgram.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\AcademicProgram.cs",
+              "RelativeToolTip": "Models\\AcademicProgram.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T15:27:36.244Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Data\\AppDbContext.cs*",
+              "RelativeToolTip": "Data\\AppDbContext.cs*",
+              "ViewState": "AgIAAPsAAAAAAAAAAAAAACcAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T15:07:17.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-15T09:28:06.479Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Role.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\Role.cs",
+              "RelativeDocumentMoniker": "Models\\Role.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\Role.cs",
+              "RelativeToolTip": "Models\\Role.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-15T09:17:10.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-15T09:15:48.293Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-15T09:14:48.532Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
