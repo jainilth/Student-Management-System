@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagmentSystem.Models
@@ -12,20 +13,23 @@ namespace StudentManagmentSystem.Models
         [Key]
         public int StudentId { get; set; }
 
+        [ForeignKey(nameof(User))]
         public int UserId { get; set; }
 
         [Required, MaxLength(50)]
         public string EnrollmentNumber { get; set; } = string.Empty;
 
         public int AdmissionYear { get; set; }
+        [ForeignKey(nameof(AcademicProgram))]
         public int ProgramId { get; set; }
-        public int? CurrentSemesterId { get; set; }
+        [ForeignKey(nameof(CurrentSemester))]
+        public int CurrentSemesterId { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        public User User { get; set; } = null!;
-        public AcademicProgram AcademicProgram { get; set; } = null!;
+        public User? User { get; set; }
+        public AcademicProgram? AcademicProgram { get; set; }
         public Semester? CurrentSemester { get; set; }
 
         public ICollection<StudentSemester> StudentSemesters { get; set; } = new List<StudentSemester>();

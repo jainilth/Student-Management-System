@@ -1,21 +1,19 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagmentSystem.Models
 {
-    [Index(nameof(StudentId), nameof(SubjectId), nameof(SemesterId), IsUnique = true)]
-    [Index(nameof(StudentId))]
-    [Index(nameof(SubjectId))]
-    [Index(nameof(SemesterId))]
+    [Index(nameof(StudentSemesterId), nameof(SemesterSubjectId), IsUnique = true)]
+    [Index(nameof(SemesterSubjectId))]
     public class Attendance
     {
         [Key]
         public int AttendanceId { get; set; }
-
-        public int StudentId { get; set; }
-        public int SubjectId { get; set; }
-        public int SemesterId { get; set; }
-
+        [ForeignKey(nameof(StudentSemester))]
+        public int StudentSemesterId { get; set; }
+        [ForeignKey(nameof(SemesterSubject))]
+        public int SemesterSubjectId { get; set; }
         public int ClassesHeld { get; set; }
         public int ClassesAttended { get; set; }
 
@@ -25,8 +23,8 @@ namespace StudentManagmentSystem.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        public Student Student { get; set; } = null!;
-        public Subject Subject { get; set; } = null!;
-        public Semester Semester { get; set; } = null!;
+        public StudentSemester StudentSemester { get; set; } = null!;
+
+        public SemesterSubject SemesterSubject { get; set; } = null!;
     }
 }

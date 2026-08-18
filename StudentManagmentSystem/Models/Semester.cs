@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace StudentManagmentSystem.Models
 {
     [Index(nameof(SemesterNumber), IsUnique = true)]
-
+    [Index(nameof (SemesterName),IsUnique = true)]
     public class Semester
     {
         [Key]

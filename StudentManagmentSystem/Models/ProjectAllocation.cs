@@ -1,19 +1,21 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagmentSystem.Models
 {
-    [Index(nameof(ProjectId), nameof(StudentId), nameof(FacultyId), IsUnique = true)]
-    [Index(nameof(ProjectId))]
+    [Index(nameof(ProjectId), nameof(StudentId), IsUnique = true)]
     [Index(nameof(StudentId))]
     [Index(nameof(FacultyId))]
     public class ProjectAllocation
     {
         [Key]
         public int AllocationId { get; set; }
-
+        [ForeignKey(nameof(Project))]
         public int ProjectId { get; set; }
+        [ForeignKey(nameof(Student))]
         public int StudentId { get; set; }
+        [ForeignKey(nameof(Faculty))]
         public int FacultyId { get; set; }
 
         [Precision(5, 2)]

@@ -1,5 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagmentSystem.Models
 {
@@ -9,6 +10,7 @@ namespace StudentManagmentSystem.Models
         [Key]
         public int SemesterResultId { get; set; }
 
+        [ForeignKey(nameof(StudentSemester))]
         public int StudentSemesterId { get; set; }
 
         [Precision(4, 2)]

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagmentSystem.Models
 {
+    [Index(nameof(RoleName), IsUnique = true)]
     public class Role
     {
         [Key]

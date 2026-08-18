@@ -41,7 +41,7 @@ namespace StudentManagmentSystem.Models
         public int RoleId { get; set; }
 
         [ForeignKey(nameof(RoleId))]
-        public Role Role { get; set; } = null!;
+        public Role? Role { get; set; }
 
         public Student? Student { get; set; }
         public Faculty? Faculty { get; set; }

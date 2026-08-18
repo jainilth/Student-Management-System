@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagmentSystem.Models
 {
-    [Index(nameof(SubjectId))]
-    [Index(nameof(SemesterId))]
+    [Index(nameof(SemesterSubjectId))]
     [Index(nameof(UploadedBy))]
     public class Material
     {
@@ -16,9 +16,9 @@ namespace StudentManagmentSystem.Models
 
         [MaxLength(1000)]
         public string Description { get; set; } = string.Empty;
-
-        public int SubjectId { get; set; }
-        public int SemesterId { get; set; }
+        [ForeignKey(nameof(SemesterSubject))]
+        public int SemesterSubjectId { get; set; }
+        [ForeignKey(nameof(UploadedByUser))]
         public int UploadedBy { get; set; }
 
         [Required, MaxLength(50)]
@@ -35,8 +35,8 @@ namespace StudentManagmentSystem.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        public Subject Subject { get; set; } = null!;
-        public Semester Semester { get; set; } = null!;
+        public SemesterSubject SemesterSubject { get; set; } = null!;
+
         public User UploadedByUser { get; set; } = null!;
     }
 }

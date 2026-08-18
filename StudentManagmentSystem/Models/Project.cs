@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace StudentManagmentSystem.Models
 {
     [Table("Project")]
-    [Index(nameof(SemesterId))]
-    [Index(nameof(ProgramId))]
+    [Index(nameof(SemesterId), nameof(ProgramId))]
     public class Project
     {
         [Key]
@@ -17,8 +16,9 @@ namespace StudentManagmentSystem.Models
 
         [MaxLength(1000)]
         public string Description { get; set; } = string.Empty;
-
+        [ForeignKey(nameof(Semester))]
         public int SemesterId { get; set; }
+        [ForeignKey(nameof(AcademicProgram))]
         public int ProgramId { get; set; }
 
         public DateTime StartDate { get; set; }

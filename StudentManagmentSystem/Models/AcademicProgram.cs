@@ -18,17 +18,22 @@ namespace StudentManagmentSystem.Models
         [Required, MaxLength(50)]
         public string ProgramCode { get; set; } = string.Empty;
 
+        [Required]
         public int DepartmentId { get; set; }
 
+        [Required]
         public int DurationYears { get; set; }
+
+        [Required]
         public int TotalSemesters { get; set; }
+
         public bool IsActive { get; set; } = true;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         [ForeignKey(nameof(DepartmentId))]
-        public Department Department { get; set; } = null!;
+        public Department? Department { get; set; } = null!;
         public ICollection<SemesterSubject> SemesterSubjects { get; set; } = new List<SemesterSubject>();
         public ICollection<Student> Students { get; set; } = new List<Student>();
         public ICollection<Project> Projects { get; set; } = new List<Project>();

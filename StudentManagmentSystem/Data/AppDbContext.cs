@@ -55,6 +55,18 @@ namespace StudentManagmentSystem.Data
 
             modelBuilder.Entity<AcademicProgram>(entity =>
             {
+
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_Program_DurationYears",
+                        "[DurationYears] > 0");
+
+                    t.HasCheckConstraint(
+                        "CK_Program_TotalSemesters",
+                        "[TotalSemesters] > 0");
+                });
+
                 entity.HasMany(p => p.SemesterSubjects)
                     .WithOne(ss => ss.AcademicProgram)
                     .HasForeignKey(ss => ss.ProgramId)
@@ -88,53 +100,41 @@ namespace StudentManagmentSystem.Data
                     .HasForeignKey(ss => ss.SemesterId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(s => s.FacultySubjects)
-                    .WithOne(fs => fs.Semester)
-                    .HasForeignKey(fs => fs.SemesterId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasMany(s => s.Attendances)
-                    .WithOne(a => a.Semester)
-                    .HasForeignKey(a => a.SemesterId)
-                    .OnDelete(DeleteBehavior.Restrict);
+             
 
                 entity.HasMany(s => s.Projects)
                     .WithOne(p => p.Semester)
                     .HasForeignKey(p => p.SemesterId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(s => s.Materials)
-                    .WithOne(m => m.Semester)
-                    .HasForeignKey(m => m.SemesterId)
-                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<SemesterSubject>(entity =>
+            {
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_SemesterSubject_Credits",
+                        "[Credits] > 0");
+                });
             });
 
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.HasOne(s => s.User)
-                    .WithOne(u => u.Student)
-                    .HasForeignKey<Student>(s => s.UserId)
+                entity.HasOne(x => x.User)
+                .WithOne(x => x.Student)
+                .HasForeignKey<Student>(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.AcademicProgram)
+                    .WithMany(x => x.Students)
+                    .HasForeignKey(x => x.ProgramId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(s => s.StudentSemesters)
-                    .WithOne(ss => ss.Student)
-                    .HasForeignKey(ss => ss.StudentId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(s => s.Attendances)
-                    .WithOne(a => a.Student)
-                    .HasForeignKey(a => a.StudentId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(s => s.AttendanceRecords)
-                    .WithOne(ar => ar.Student)
-                    .HasForeignKey(ar => ar.StudentId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(s => s.ProjectAllocations)
-                    .WithOne(pa => pa.Student)
-                    .HasForeignKey(pa => pa.StudentId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(x => x.CurrentSemester)
+                    .WithMany()
+                    .HasForeignKey(x => x.CurrentSemesterId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<StudentSemester>(entity =>
@@ -157,6 +157,16 @@ namespace StudentManagmentSystem.Data
 
             modelBuilder.Entity<SemesterResult>(entity =>
             {
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_SemesterResult_SGPA",
+                        "[SGPA] >= 0 AND [SGPA] <= 10");
+
+                    t.HasCheckConstraint(
+                        "CK_SemesterResult_Credits",
+                        "[EarnedCredits] >= 0 AND [EarnedCredits] <= [TotalCredits]");
+                });
                 entity.HasMany(sr => sr.SubjectResults)
                     .WithOne(su => su.SemesterResult)
                     .HasForeignKey(su => su.SemesterResultId)
@@ -165,6 +175,20 @@ namespace StudentManagmentSystem.Data
 
             modelBuilder.Entity<SubjectResult>(entity =>
             {
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_SubjectResult_Marks",
+                        "[InternalMarks] >= 0 AND " +
+                        "[ExternalMarks] >= 0 AND " +
+                        "[PracticalMarks] >= 0 AND " +
+                        "[TotalMarks] >= 0");
+
+                    t.HasCheckConstraint(
+                        "CK_SubjectResult_CreditsEarned",
+                        "[CreditsEarned] >= 0");
+                });
+
                 entity.HasOne(sr => sr.SemesterSubject)
                     .WithMany(ss => ss.SubjectResults)
                     .HasForeignKey(sr => sr.SemesterSubjectId)
@@ -183,10 +207,6 @@ namespace StudentManagmentSystem.Data
                     .HasForeignKey(fs => fs.FacultyId)
                     .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasMany(f => f.AttendanceRecords)
-                    .WithOne(ar => ar.Faculty)
-                    .HasForeignKey(ar => ar.FacultyId)
-                    .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(f => f.ProjectAllocations)
                     .WithOne(pa => pa.Faculty)
@@ -202,32 +222,34 @@ namespace StudentManagmentSystem.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            modelBuilder.Entity<FacultySubject>(entity =>
-            {
-                entity.HasOne(fs => fs.Subject)
-                    .WithMany(s => s.FacultySubjects)
-                    .HasForeignKey(fs => fs.SubjectId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
 
             modelBuilder.Entity<Attendance>(entity =>
             {
-                entity.HasOne(a => a.Subject)
-                    .WithMany(s => s.Attendances)
-                    .HasForeignKey(a => a.SubjectId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_Attendance_Classes",
+                        "[ClassesHeld] >= 0 AND " +
+                        "[ClassesAttended] >= 0 AND " +
+                        "[ClassesAttended] <= [ClassesHeld]");
+
+                    t.HasCheckConstraint(
+                        "CK_Attendance_Percentage",
+                        "[AttendancePercentage] >= 0 AND " +
+                        "[AttendancePercentage] <= 100");
+                });
             });
 
-            modelBuilder.Entity<AttendanceRecord>(entity =>
-            {
-                entity.HasOne(ar => ar.Subject)
-                    .WithMany(s => s.AttendanceRecords)
-                    .HasForeignKey(ar => ar.SubjectId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
+            
 
             modelBuilder.Entity<Project>(entity =>
             {
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_Project_DateRange",
+                        "[EndDate] >= [StartDate]");
+                });
                 entity.HasMany(p => p.ProjectAllocations)
                     .WithOne(pa => pa.Project)
                     .HasForeignKey(pa => pa.ProjectId)
@@ -236,14 +258,48 @@ namespace StudentManagmentSystem.Data
 
             modelBuilder.Entity<ProjectAllocation>(entity =>
             {
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_ProjectAllocation_FinalScore",
+                        "[FinalScore] IS NULL OR " +
+                        "([FinalScore] >= 0 AND [FinalScore] <= 100)");
+                });
                 entity.HasMany(pa => pa.Tasks)
                     .WithOne(t => t.ProjectAllocation)
                     .HasForeignKey(t => t.ProjectAllocationId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<ProjectTask>(entity =>
+            {
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_ProjectTask_Scores",
+                        "[AssignedScore] >= 0 AND " +
+                        "[EarnedScore] >= 0 AND " +
+                        "[EarnedScore] <= [AssignedScore]");
+
+                    t.HasCheckConstraint(
+                        "CK_ProjectTask_DateRange",
+                        "[DueDate] >= [StartDate]");
+
+                    t.HasCheckConstraint(
+                        "CK_ProjectTask_CompletedDate",
+                        "[CompletedDate] IS NULL OR " +
+                        "[CompletedDate] >= [StartDate]");
+                });
+            });
+
             modelBuilder.Entity<Material>(entity =>
             {
+                entity.ToTable(t =>
+                {
+                    t.HasCheckConstraint(
+                        "CK_Material_FileSize",
+                        "[FileSize] > 0");
+                });
                 entity.Property(m => m.FileSize).HasColumnType("bigint");
             });
         }

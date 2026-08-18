@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 namespace StudentManagmentSystem.Models
 {
     [Table("Task")]
-    [Index(nameof(ProjectAllocationId))]
-    [Index(nameof(TaskStatus))]
+    [Index(nameof(ProjectAllocationId), nameof(TaskStatus))]
+    [Index(nameof(DueDate))]
     public class ProjectTask
     {
         [Key]
         public int TaskId { get; set; }
-
+        [ForeignKey(nameof(ProjectAllocation))]
         public int ProjectAllocationId { get; set; }
 
         [Required, MaxLength(200)]

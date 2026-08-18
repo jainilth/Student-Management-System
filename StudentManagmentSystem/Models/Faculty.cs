@@ -1,5 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagmentSystem.Models
 {
@@ -10,12 +11,12 @@ namespace StudentManagmentSystem.Models
     {
         [Key]
         public int FacultyId { get; set; }
-
+        [ForeignKey(nameof(User))]
         public int UserId { get; set; }
 
         [Required, MaxLength(50)]
         public string EmployeeNumber { get; set; } = string.Empty;
-
+        [ForeignKey(nameof(Department))]
         public int DepartmentId { get; set; }
 
         [MaxLength(100)]

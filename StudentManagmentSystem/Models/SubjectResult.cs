@@ -1,5 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagmentSystem.Models
 {
@@ -10,8 +11,9 @@ namespace StudentManagmentSystem.Models
     {
         [Key]
         public int SubjectResultId { get; set; }
-
+        [ForeignKey(nameof(SemesterResult))]
         public int SemesterResultId { get; set; }
+        [ForeignKey(nameof(SemesterSubject))]
         public int SemesterSubjectId { get; set; }
 
         [Precision(5, 2)]
@@ -25,12 +27,8 @@ namespace StudentManagmentSystem.Models
 
         [Precision(6, 2)]
         public decimal TotalMarks { get; set; }
-
-        [Required, MaxLength(10)]
-        public string Grade { get; set; } = string.Empty;
-
-        [Precision(4, 2)]
-        public decimal GradePoint { get; set; }
+        [ForeignKey(nameof(Grade))]
+        public int GradeId { get; set; }
 
         [Precision(5, 2)]
         public decimal CreditsEarned { get; set; }
@@ -41,6 +39,7 @@ namespace StudentManagmentSystem.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
+        public Grade Grade { get; set; } = null!;
         public SemesterResult SemesterResult { get; set; } = null!;
         public SemesterSubject SemesterSubject { get; set; } = null!;
     }

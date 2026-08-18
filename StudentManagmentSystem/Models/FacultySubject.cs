@@ -1,29 +1,29 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagmentSystem.Models
 {
-    [Index(nameof(FacultyId), nameof(SubjectId), nameof(SemesterId), nameof(AcademicYear), IsUnique = true)]
-    [Index(nameof(FacultyId))]
-    [Index(nameof(SubjectId))]
-    [Index(nameof(SemesterId))]
+    [Index(nameof(FacultyId), nameof(SemesterSubjectId),nameof(AcademicYearId), IsUnique = true)]
+    [Index(nameof(SemesterSubjectId))]
     public class FacultySubject
     {
         [Key]
         public int FacultySubjectId { get; set; }
 
+        [ForeignKey(nameof(Faculty))]
         public int FacultyId { get; set; }
-        public int SubjectId { get; set; }
-        public int SemesterId { get; set; }
+        [ForeignKey(nameof(SemesterSubject))]
+        public int SemesterSubjectId { get; set; }
+        [ForeignKey(nameof(AcademicYear))]
+        public int AcademicYearId { get; set; }
 
-        [Required, MaxLength(20)]
-        public string AcademicYear { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        public Faculty Faculty { get; set; } = null!;
-        public Subject Subject { get; set; } = null!;
-        public Semester Semester { get; set; } = null!;
+        public Faculty? Faculty { get; set; }
+        public SemesterSubject? SemesterSubject { get; set; }
+        public AcademicYear? AcademicYear { get; set; }
     }
 }
