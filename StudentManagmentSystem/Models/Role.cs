@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagmentSystem.Models
@@ -12,6 +13,7 @@ namespace StudentManagmentSystem.Models
         [Required, MaxLength(100)]
         public string RoleName { get; set; } = string.Empty;
 
+        [JsonIgnore]
         public ICollection<User> Users { get; set; } = new List<User>();
     }
 }

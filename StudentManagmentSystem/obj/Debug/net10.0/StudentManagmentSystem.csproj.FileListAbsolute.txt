@@ -164,10 +164,10 @@ D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\ne
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\staticwebassets.development.json
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\swae.build.ex.cache
-D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\StudentM.9CAA493F.Up2Date
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\StudentManagmentSystem.dll
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\refint\StudentManagmentSystem.dll
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\StudentManagmentSystem.pdb
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\StudentManagmentSystem.genruntimeconfig.cache
 D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\ref\StudentManagmentSystem.dll
+D:\jainil\Projects\Student-Management-System\StudentManagmentSystem\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
