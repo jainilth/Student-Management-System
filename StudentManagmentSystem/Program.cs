@@ -1,7 +1,9 @@
 
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using StudentManagmentSystem.Data;
+using StudentManagmentSystem.Middleware;
 
 namespace StudentManagmentSystem
 {
@@ -19,9 +21,13 @@ namespace StudentManagmentSystem
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+            app.UseMiddleware<GlobalExceptionMiddleware>();
+
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();

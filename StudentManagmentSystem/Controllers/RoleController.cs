@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentManagmentSystem.Data;
 using StudentManagmentSystem.Models;
+using StudentManagmentSystem.Dto;
+
 
 namespace StudentManagmentSystem.Controllers
 {
@@ -19,59 +21,114 @@ namespace StudentManagmentSystem.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllRoles()
         {
-            var roles = await context.Roles.ToListAsync();
-            var response = new CommonApiResponse<List<Role>>
+            var roles = await context.Roles.Select(r => new ResponseDto 
+            {
+                RoleId = r.RoleId,
+                RoleName = r.RoleName
+            }).ToListAsync();
+            var response = new CommonApiResponse<List<ResponseDto>>
             {
                 Success = true,
-                Message="Roles retrived sucessfully",
-                Data=roles,
+                StatusCode = 200,
+                Message = "Roles retrieved successfully",
+                Data = roles
             };
             return Ok(response);
         }
 
+
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Role>> GetById(int id)
+        public async Task<ActionResult> GetById([FromRoute] int id)
         {
             var role = await context.Roles.FindAsync(id);
 
-            return role is null ? NotFound() : Ok(role);
+            if (role is null)
+            {
+                return NotFound(new CommonApiResponse<ResponseDto> { Success = false, StatusCode = 404, Message = "Role not found" });
+            }
+
+            return Ok(new CommonApiResponse<ResponseDto>
+            {
+                Success = true,
+                StatusCode = 200,
+                Message = "Role retrieved successfully",
+                Data = new ResponseDto 
+                { 
+                    RoleId = role.RoleId, 
+                    RoleName = role.RoleName 
+                }
+            });
         }
 
         [HttpPost]
-        public async Task<ActionResult<Role>> CreateRole(Role role)
+        public async Task<ActionResult> CreateRole([FromBody] CreateRoleDto roleDto)
         {
+            var role = new Role { RoleName = roleDto.RoleName };
             context.Roles.Add(role);
             await context.SaveChangesAsync();
-            return Ok(new {message="added sucessfully",data = role });
+
+            return StatusCode(201, new CommonApiResponse<ResponseDto>
+            {
+                Success = true,
+                StatusCode = 201,
+                Message = "Role created successfully",
+                Data = new ResponseDto 
+                { 
+                    RoleId = role.RoleId, 
+                    RoleName = role.RoleName 
+                }
+            });
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Update(int id, Role role)
+        public async Task<ActionResult> Update([FromRoute] int id, [FromBody] UpdateRoleDto roleDto)
         {
             var existing = await context.Roles.FindAsync(id);
             if (existing is null)
             {
-                return NotFound();
+                return NotFound(new CommonApiResponse<ResponseDto> { Success = false, StatusCode = 404, Message = "Role not found" });
             }
 
-            existing.RoleName = role.RoleName;
+            existing.RoleName = roleDto.RoleName;
 
             await context.SaveChangesAsync();
-            return Ok(new { message = "added Updated", data = existing });
+
+            return Ok(new CommonApiResponse<ResponseDto>
+            {
+                Success = true,
+                StatusCode = 200,
+                Message = "Role updated successfully",
+                Data = new ResponseDto 
+                { 
+                    RoleId = existing.RoleId, 
+                    RoleName = existing.RoleName 
+                }
+            });
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete([FromRoute] int id)
         {
             var role = await context.Roles.FindAsync(id);
             if (role is null)
             {
-                return NotFound();
+                return NotFound(new CommonApiResponse<ResponseDto> { Success = false, StatusCode = 404, Message = "Role not found" });
             }
 
             context.Roles.Remove(role);
             await context.SaveChangesAsync();
-            return NoContent();
+            
+            return Ok(new CommonApiResponse<ResponseDto>
+            {
+                Success = true,
+                StatusCode = 200,
+                Message = "Role deleted successfully",
+                Data = new ResponseDto 
+                { 
+                    RoleId = role.RoleId, 
+                    RoleName = role.RoleName 
+                }
+            });
         }
     }
 }

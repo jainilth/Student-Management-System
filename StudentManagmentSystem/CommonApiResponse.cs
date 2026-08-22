@@ -1,9 +1,12 @@
-﻿namespace StudentManagmentSystem
+namespace StudentManagmentSystem
 {
     public class CommonApiResponse<T>
     {
         // Indicates whether request was successful
         public bool Success { get; set; }
+
+        // HTTP status code of the response
+        public int StatusCode { get; set; }
 
         // Success or failure message
         public string Message { get; set; }

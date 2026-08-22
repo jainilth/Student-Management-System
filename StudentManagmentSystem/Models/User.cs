@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +6,7 @@ namespace StudentManagmentSystem.Models
 {
     [Index(nameof(UserName), IsUnique = true)]
     [Index(nameof(Email), IsUnique = true)]
+    [Index(nameof(Mobilenumber), IsUnique = true)]
     [Index(nameof(RoleId))]
     public class User
     {

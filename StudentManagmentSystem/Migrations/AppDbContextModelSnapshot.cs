@@ -1062,6 +1062,9 @@ namespace StudentManagmentSystem.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
+                    b.HasIndex("Mobilenumber")
+                        .IsUnique();
+
                     b.HasIndex("RoleId");
 
                     b.HasIndex("UserName")
