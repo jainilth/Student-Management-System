@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "admin-wrapper-refactor-task",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"frontend/scripts/refactor-admin-wrappers.js"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "git-status-frontend",
+			"type": "shell",
+			"command": "git",
+			"args": [
+				"-C",
+				"frontend",
+				"status",
+				"--porcelain"
+			],
+			"isBackground": false
+		}
+	]
+}

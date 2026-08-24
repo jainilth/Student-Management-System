@@ -21,8 +21,6 @@ namespace StudentManagmentSystem.Validators.Student
             RuleFor(x => x.ProgramId)
                 .GreaterThan(0).WithMessage("A valid Program ID is required.");
 
-            RuleFor(x => x.CurrentSemesterId)
-                .GreaterThan(0).WithMessage("A valid Semester ID is required.");
         }
     }
 }

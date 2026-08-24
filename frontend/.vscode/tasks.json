@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "run-admin-wrapper-refactor",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"scripts/refactor-admin-wrappers.js"
+			],
+			"isBackground": false
+		}
+	]
+}

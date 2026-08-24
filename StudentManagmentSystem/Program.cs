@@ -23,6 +23,20 @@ namespace StudentManagmentSystem
 
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+            // Allow Next.js frontend (dev + prod) to call the API
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins(
+                            "http://localhost:3000",
+                            "https://localhost:3000"
+                        )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -34,7 +48,14 @@ namespace StudentManagmentSystem
                 app.MapScalarApiReference("/");
             }
 
-            app.UseHttpsRedirection();
+            app.UseCors("AllowFrontend");
+
+            // Keep HTTP available in local development so frontend server-side fetch
+            // calls do not fail on self-signed localhost certificates.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseAuthorization();
 

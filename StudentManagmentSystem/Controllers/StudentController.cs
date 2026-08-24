@@ -27,12 +27,17 @@ namespace StudentManagmentSystem.Controllers
 
         private static StudentResponseDto MapToDto(Student s) => new StudentResponseDto
         {
-            StudentId = s.StudentId, UserId = s.UserId,
+            StudentId = s.StudentId,
+            UserId = s.UserId,
             UserName = s.User != null ? s.User.UserName : string.Empty,
-            EnrollmentNumber = s.EnrollmentNumber, AdmissionYear = s.AdmissionYear,
-            ProgramId = s.ProgramId, ProgramName = s.AcademicProgram != null ? s.AcademicProgram.ProgramName : string.Empty,
-            CurrentSemesterId = s.CurrentSemesterId, SemesterName = s.CurrentSemester != null ? s.CurrentSemester.SemesterName : string.Empty,
-            CreatedAt = s.CreatedAt, UpdatedAt = s.UpdatedAt
+            EnrollmentNumber = s.EnrollmentNumber,
+            AdmissionYear = s.AdmissionYear,
+            ProgramId = s.ProgramId,
+            ProgramName = s.AcademicProgram != null ? s.AcademicProgram.ProgramName : string.Empty,
+            CurrentSemesterId = s.CurrentSemesterId,
+            SemesterName = s.CurrentSemester != null ? s.CurrentSemester.SemesterName : string.Empty,
+            CreatedAt = s.CreatedAt,
+            UpdatedAt = s.UpdatedAt
         };
 
         [HttpGet]
@@ -47,7 +52,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<StudentResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Students retrieved successfully", Data = students
+                Success = true,
+                StatusCode = 200,
+                Message = "Students retrieved successfully",
+                Data = students
             });
         }
 
@@ -63,12 +71,17 @@ namespace StudentManagmentSystem.Controllers
             if (s is null)
                 return NotFound(new CommonApiResponse<StudentResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Student not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Student not found"
                 });
 
             return Ok(new CommonApiResponse<StudentResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Student retrieved successfully", Data = MapToDto(s)
+                Success = true,
+                StatusCode = 200,
+                Message = "Student retrieved successfully",
+                Data = MapToDto(s)
             });
         }
 
@@ -79,7 +92,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<StudentResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -90,16 +105,31 @@ namespace StudentManagmentSystem.Controllers
                 string field = duplicate.UserId == dto.UserId ? "User ID" : "Enrollment number";
                 return BadRequest(new CommonApiResponse<StudentResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = $"{field} is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{field} is already in use."
                 });
             }
 
+            var firstSemester = await context.Semesters
+                .FirstOrDefaultAsync(s => s.SemesterNumber == 1);
+            if (firstSemester is null)
+                return BadRequest(new CommonApiResponse<StudentResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Semester 1 must exist before creating a student."
+                });
+
             var entity = new Student
             {
-                UserId = dto.UserId, EnrollmentNumber = dto.EnrollmentNumber,
-                AdmissionYear = dto.AdmissionYear, ProgramId = dto.ProgramId,
-                CurrentSemesterId = dto.CurrentSemesterId,
-                CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                UserId = dto.UserId,
+                EnrollmentNumber = dto.EnrollmentNumber,
+                AdmissionYear = dto.AdmissionYear,
+                ProgramId = dto.ProgramId,
+                CurrentSemesterId = firstSemester.SemesterId,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Students.Add(entity);
             await context.SaveChangesAsync();
@@ -110,7 +140,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<StudentResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Student created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Student created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -121,7 +154,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<StudentResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -129,7 +164,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<StudentResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Student not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Student not found"
                 });
 
             var duplicate = await context.Students.FirstOrDefaultAsync(s =>
@@ -139,7 +176,9 @@ namespace StudentManagmentSystem.Controllers
                 string field = duplicate.UserId == dto.UserId ? "User ID" : "Enrollment number";
                 return BadRequest(new CommonApiResponse<StudentResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = $"{field} is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{field} is already in use."
                 });
             }
 
@@ -157,7 +196,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<StudentResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Student updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Student updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -173,7 +215,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<StudentResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Student not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Student not found"
                 });
 
             context.Students.Remove(entity);
@@ -181,7 +225,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<StudentResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Student deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Student deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }
