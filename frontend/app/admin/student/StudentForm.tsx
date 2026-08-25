@@ -16,7 +16,7 @@ export default async function StudentForm({
   mode,
 }: StudentFormProps) {
   const editing = mode === "edit";
-  const userIdOptions = await getAdminOptions("User");
+  const userIdOptions = await getAdminOptions("Student");
   const programIdOptions = await getAdminOptions("AcademicProgram");
   const currentSemesterIdOptions = editing
     ? await getAdminOptions("Semester")

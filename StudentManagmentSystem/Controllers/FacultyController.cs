@@ -27,12 +27,16 @@ namespace StudentManagmentSystem.Controllers
 
         private static FacultyResponseDto MapToDto(Faculty f) => new FacultyResponseDto
         {
-            FacultyId = f.FacultyId, UserId = f.UserId,
+            FacultyId = f.FacultyId,
+            UserId = f.UserId,
             UserName = f.User != null ? f.User.UserName : string.Empty,
             EmployeeNumber = f.EmployeeNumber,
-            DepartmentId = f.DepartmentId, DepartmentName = f.Department != null ? f.Department.DepartmentName : string.Empty,
-            Designation = f.Designation, JoiningDate = f.JoiningDate,
-            CreatedAt = f.CreatedAt, UpdatedAt = f.UpdatedAt
+            DepartmentId = f.DepartmentId,
+            DepartmentName = f.Department != null ? f.Department.DepartmentName : string.Empty,
+            Designation = f.Designation,
+            JoiningDate = f.JoiningDate,
+            CreatedAt = f.CreatedAt,
+            UpdatedAt = f.UpdatedAt
         };
 
         [HttpGet]
@@ -46,7 +50,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<FacultyResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Faculty members retrieved successfully", Data = faculties
+                Success = true,
+                StatusCode = 200,
+                Message = "Faculty members retrieved successfully",
+                Data = faculties
             });
         }
 
@@ -61,12 +68,17 @@ namespace StudentManagmentSystem.Controllers
             if (f is null)
                 return NotFound(new CommonApiResponse<FacultyResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Faculty member not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Faculty member not found"
                 });
 
             return Ok(new CommonApiResponse<FacultyResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Faculty member retrieved successfully", Data = MapToDto(f)
+                Success = true,
+                StatusCode = 200,
+                Message = "Faculty member retrieved successfully",
+                Data = MapToDto(f)
             });
         }
 
@@ -77,7 +89,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<FacultyResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -88,15 +102,21 @@ namespace StudentManagmentSystem.Controllers
                 string field = duplicate.UserId == dto.UserId ? "User ID" : "Employee number";
                 return BadRequest(new CommonApiResponse<FacultyResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = $"{field} is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{field} is already in use."
                 });
             }
 
             var entity = new Faculty
             {
-                UserId = dto.UserId, EmployeeNumber = dto.EmployeeNumber,
-                DepartmentId = dto.DepartmentId, Designation = dto.Designation,
-                JoiningDate = dto.JoiningDate, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                UserId = dto.UserId,
+                EmployeeNumber = dto.EmployeeNumber,
+                DepartmentId = dto.DepartmentId,
+                Designation = dto.Designation,
+                JoiningDate = dto.JoiningDate,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Faculties.Add(entity);
             await context.SaveChangesAsync();
@@ -106,7 +126,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<FacultyResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Faculty member created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Faculty member created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -117,7 +140,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<FacultyResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -125,7 +150,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<FacultyResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Faculty member not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Faculty member not found"
                 });
 
             var duplicate = await context.Faculties.FirstOrDefaultAsync(f =>
@@ -135,7 +162,9 @@ namespace StudentManagmentSystem.Controllers
                 string field = duplicate.UserId == dto.UserId ? "User ID" : "Employee number";
                 return BadRequest(new CommonApiResponse<FacultyResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = $"{field} is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{field} is already in use."
                 });
             }
 
@@ -152,7 +181,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<FacultyResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Faculty member updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Faculty member updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -167,7 +199,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<FacultyResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Faculty member not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Faculty member not found"
                 });
 
             context.Faculties.Remove(entity);
@@ -175,7 +209,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<FacultyResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Faculty member deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Faculty member deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }

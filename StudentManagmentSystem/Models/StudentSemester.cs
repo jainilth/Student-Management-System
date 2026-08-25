@@ -10,7 +10,7 @@ namespace StudentManagmentSystem.Models
     {
         [Key]
         public int StudentSemesterId { get; set; }
-        
+
         public int StudentId { get; set; }
         public int SemesterId { get; set; }
         public int AcademicYearId { get; set; }

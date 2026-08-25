@@ -100,7 +100,7 @@ namespace StudentManagmentSystem.Data
                     .HasForeignKey(ss => ss.SemesterId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-             
+
 
                 entity.HasMany(s => s.Projects)
                     .WithOne(p => p.Semester)
@@ -240,7 +240,7 @@ namespace StudentManagmentSystem.Data
                 });
             });
 
-            
+
 
             modelBuilder.Entity<Project>(entity =>
             {

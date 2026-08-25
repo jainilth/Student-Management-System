@@ -30,15 +30,24 @@ namespace StudentManagmentSystem.Controllers
         {
             var programs = await context.Programs.Include(p => p.Department).Select(p => new AcademicProgramResponseDto
             {
-                ProgramId = p.ProgramId, ProgramName = p.ProgramName, ProgramCode = p.ProgramCode,
-                DepartmentId = p.DepartmentId, DepartmentName = p.Department != null ? p.Department.DepartmentName : string.Empty,
-                DurationYears = p.DurationYears, TotalSemesters = p.TotalSemesters,
-                IsActive = p.IsActive, CreatedAt = p.CreatedAt, UpdatedAt = p.UpdatedAt
+                ProgramId = p.ProgramId,
+                ProgramName = p.ProgramName,
+                ProgramCode = p.ProgramCode,
+                DepartmentId = p.DepartmentId,
+                DepartmentName = p.Department != null ? p.Department.DepartmentName : string.Empty,
+                DurationYears = p.DurationYears,
+                TotalSemesters = p.TotalSemesters,
+                IsActive = p.IsActive,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt
             }).ToListAsync();
 
             return Ok(new CommonApiResponse<List<AcademicProgramResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Academic programs retrieved successfully", Data = programs
+                Success = true,
+                StatusCode = 200,
+                Message = "Academic programs retrieved successfully",
+                Data = programs
             });
         }
 
@@ -49,18 +58,28 @@ namespace StudentManagmentSystem.Controllers
             if (p is null)
                 return NotFound(new CommonApiResponse<AcademicProgramResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Academic program not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Academic program not found"
                 });
 
             return Ok(new CommonApiResponse<AcademicProgramResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Academic program retrieved successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Academic program retrieved successfully",
                 Data = new AcademicProgramResponseDto
                 {
-                    ProgramId = p.ProgramId, ProgramName = p.ProgramName, ProgramCode = p.ProgramCode,
-                    DepartmentId = p.DepartmentId, DepartmentName = p.Department != null ? p.Department.DepartmentName : string.Empty,
-                    DurationYears = p.DurationYears, TotalSemesters = p.TotalSemesters,
-                    IsActive = p.IsActive, CreatedAt = p.CreatedAt, UpdatedAt = p.UpdatedAt
+                    ProgramId = p.ProgramId,
+                    ProgramName = p.ProgramName,
+                    ProgramCode = p.ProgramCode,
+                    DepartmentId = p.DepartmentId,
+                    DepartmentName = p.Department != null ? p.Department.DepartmentName : string.Empty,
+                    DurationYears = p.DurationYears,
+                    TotalSemesters = p.TotalSemesters,
+                    IsActive = p.IsActive,
+                    CreatedAt = p.CreatedAt,
+                    UpdatedAt = p.UpdatedAt
                 }
             });
         }
@@ -72,7 +91,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<AcademicProgramResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -80,15 +101,21 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<AcademicProgramResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Program code is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Program code is already in use."
                 });
 
             var entity = new AcademicProgram
             {
-                ProgramName = dto.ProgramName, ProgramCode = dto.ProgramCode,
-                DepartmentId = dto.DepartmentId, DurationYears = dto.DurationYears,
-                TotalSemesters = dto.TotalSemesters, IsActive = dto.IsActive,
-                CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                ProgramName = dto.ProgramName,
+                ProgramCode = dto.ProgramCode,
+                DepartmentId = dto.DepartmentId,
+                DurationYears = dto.DurationYears,
+                TotalSemesters = dto.TotalSemesters,
+                IsActive = dto.IsActive,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Programs.Add(entity);
             await context.SaveChangesAsync();
@@ -96,13 +123,21 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<AcademicProgramResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Academic program created successfully",
+                Success = true,
+                StatusCode = 201,
+                Message = "Academic program created successfully",
                 Data = new AcademicProgramResponseDto
                 {
-                    ProgramId = entity.ProgramId, ProgramName = entity.ProgramName, ProgramCode = entity.ProgramCode,
-                    DepartmentId = entity.DepartmentId, DepartmentName = entity.Department != null ? entity.Department.DepartmentName : string.Empty,
-                    DurationYears = entity.DurationYears, TotalSemesters = entity.TotalSemesters,
-                    IsActive = entity.IsActive, CreatedAt = entity.CreatedAt, UpdatedAt = entity.UpdatedAt
+                    ProgramId = entity.ProgramId,
+                    ProgramName = entity.ProgramName,
+                    ProgramCode = entity.ProgramCode,
+                    DepartmentId = entity.DepartmentId,
+                    DepartmentName = entity.Department != null ? entity.Department.DepartmentName : string.Empty,
+                    DurationYears = entity.DurationYears,
+                    TotalSemesters = entity.TotalSemesters,
+                    IsActive = entity.IsActive,
+                    CreatedAt = entity.CreatedAt,
+                    UpdatedAt = entity.UpdatedAt
                 }
             });
         }
@@ -114,7 +149,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<AcademicProgramResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -122,7 +159,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<AcademicProgramResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Academic program not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Academic program not found"
                 });
 
             var duplicate = await context.Programs.FirstOrDefaultAsync(p =>
@@ -130,7 +169,9 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<AcademicProgramResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Program code is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Program code is already in use."
                 });
 
             existing.ProgramName = dto.ProgramName;
@@ -145,13 +186,21 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<AcademicProgramResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Academic program updated successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Academic program updated successfully",
                 Data = new AcademicProgramResponseDto
                 {
-                    ProgramId = existing.ProgramId, ProgramName = existing.ProgramName, ProgramCode = existing.ProgramCode,
-                    DepartmentId = existing.DepartmentId, DepartmentName = existing.Department != null ? existing.Department.DepartmentName : string.Empty,
-                    DurationYears = existing.DurationYears, TotalSemesters = existing.TotalSemesters,
-                    IsActive = existing.IsActive, CreatedAt = existing.CreatedAt, UpdatedAt = existing.UpdatedAt
+                    ProgramId = existing.ProgramId,
+                    ProgramName = existing.ProgramName,
+                    ProgramCode = existing.ProgramCode,
+                    DepartmentId = existing.DepartmentId,
+                    DepartmentName = existing.Department != null ? existing.Department.DepartmentName : string.Empty,
+                    DurationYears = existing.DurationYears,
+                    TotalSemesters = existing.TotalSemesters,
+                    IsActive = existing.IsActive,
+                    CreatedAt = existing.CreatedAt,
+                    UpdatedAt = existing.UpdatedAt
                 }
             });
         }
@@ -163,7 +212,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<AcademicProgramResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Academic program not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Academic program not found"
                 });
 
             context.Programs.Remove(entity);
@@ -171,13 +222,21 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<AcademicProgramResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Academic program deleted successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Academic program deleted successfully",
                 Data = new AcademicProgramResponseDto
                 {
-                    ProgramId = entity.ProgramId, ProgramName = entity.ProgramName, ProgramCode = entity.ProgramCode,
-                    DepartmentId = entity.DepartmentId, DepartmentName = entity.Department != null ? entity.Department.DepartmentName : string.Empty,
-                    DurationYears = entity.DurationYears, TotalSemesters = entity.TotalSemesters,
-                    IsActive = entity.IsActive, CreatedAt = entity.CreatedAt, UpdatedAt = entity.UpdatedAt
+                    ProgramId = entity.ProgramId,
+                    ProgramName = entity.ProgramName,
+                    ProgramCode = entity.ProgramCode,
+                    DepartmentId = entity.DepartmentId,
+                    DepartmentName = entity.Department != null ? entity.Department.DepartmentName : string.Empty,
+                    DurationYears = entity.DurationYears,
+                    TotalSemesters = entity.TotalSemesters,
+                    IsActive = entity.IsActive,
+                    CreatedAt = entity.CreatedAt,
+                    UpdatedAt = entity.UpdatedAt
                 }
             });
         }

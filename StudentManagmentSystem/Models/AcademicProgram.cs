@@ -6,7 +6,7 @@ namespace StudentManagmentSystem.Models
 {
     [Table("Program")]
     [Index(nameof(ProgramCode), IsUnique = true)]
-    [Index(nameof(DepartmentId),nameof(ProgramName),IsUnique=true)]
+    [Index(nameof(DepartmentId), nameof(ProgramName), IsUnique = true)]
     public class AcademicProgram
     {
         [Key]

@@ -30,14 +30,20 @@ namespace StudentManagmentSystem.Controllers
         {
             var subjects = await context.Subjects.Select(s => new SubjectResponseDto
             {
-                SubjectId = s.SubjectId, SubjectCode = s.SubjectCode,
-                SubjectName = s.SubjectName, SubjectType = s.SubjectType,
-                CreatedAt = s.CreatedAt, UpdatedAt = s.UpdatedAt
+                SubjectId = s.SubjectId,
+                SubjectCode = s.SubjectCode,
+                SubjectName = s.SubjectName,
+                SubjectType = s.SubjectType,
+                CreatedAt = s.CreatedAt,
+                UpdatedAt = s.UpdatedAt
             }).ToListAsync();
 
             return Ok(new CommonApiResponse<List<SubjectResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Subjects retrieved successfully", Data = subjects
+                Success = true,
+                StatusCode = 200,
+                Message = "Subjects retrieved successfully",
+                Data = subjects
             });
         }
 
@@ -48,17 +54,24 @@ namespace StudentManagmentSystem.Controllers
             if (s is null)
                 return NotFound(new CommonApiResponse<SubjectResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Subject not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Subject not found"
                 });
 
             return Ok(new CommonApiResponse<SubjectResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Subject retrieved successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Subject retrieved successfully",
                 Data = new SubjectResponseDto
                 {
-                    SubjectId = s.SubjectId, SubjectCode = s.SubjectCode,
-                    SubjectName = s.SubjectName, SubjectType = s.SubjectType,
-                    CreatedAt = s.CreatedAt, UpdatedAt = s.UpdatedAt
+                    SubjectId = s.SubjectId,
+                    SubjectCode = s.SubjectCode,
+                    SubjectName = s.SubjectName,
+                    SubjectType = s.SubjectType,
+                    CreatedAt = s.CreatedAt,
+                    UpdatedAt = s.UpdatedAt
                 }
             });
         }
@@ -70,7 +83,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<SubjectResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -78,25 +93,35 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<SubjectResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Subject code is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Subject code is already in use."
                 });
 
             var entity = new Subject
             {
-                SubjectCode = dto.SubjectCode, SubjectName = dto.SubjectName,
-                SubjectType = dto.SubjectType, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                SubjectCode = dto.SubjectCode,
+                SubjectName = dto.SubjectName,
+                SubjectType = dto.SubjectType,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Subjects.Add(entity);
             await context.SaveChangesAsync();
 
             return StatusCode(201, new CommonApiResponse<SubjectResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Subject created successfully",
+                Success = true,
+                StatusCode = 201,
+                Message = "Subject created successfully",
                 Data = new SubjectResponseDto
                 {
-                    SubjectId = entity.SubjectId, SubjectCode = entity.SubjectCode,
-                    SubjectName = entity.SubjectName, SubjectType = entity.SubjectType,
-                    CreatedAt = entity.CreatedAt, UpdatedAt = entity.UpdatedAt
+                    SubjectId = entity.SubjectId,
+                    SubjectCode = entity.SubjectCode,
+                    SubjectName = entity.SubjectName,
+                    SubjectType = entity.SubjectType,
+                    CreatedAt = entity.CreatedAt,
+                    UpdatedAt = entity.UpdatedAt
                 }
             });
         }
@@ -108,7 +133,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<SubjectResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -116,7 +143,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<SubjectResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Subject not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Subject not found"
                 });
 
             var duplicate = await context.Subjects.FirstOrDefaultAsync(s =>
@@ -124,7 +153,9 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<SubjectResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Subject code is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Subject code is already in use."
                 });
 
             existing.SubjectCode = dto.SubjectCode;
@@ -135,12 +166,17 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<SubjectResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Subject updated successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Subject updated successfully",
                 Data = new SubjectResponseDto
                 {
-                    SubjectId = existing.SubjectId, SubjectCode = existing.SubjectCode,
-                    SubjectName = existing.SubjectName, SubjectType = existing.SubjectType,
-                    CreatedAt = existing.CreatedAt, UpdatedAt = existing.UpdatedAt
+                    SubjectId = existing.SubjectId,
+                    SubjectCode = existing.SubjectCode,
+                    SubjectName = existing.SubjectName,
+                    SubjectType = existing.SubjectType,
+                    CreatedAt = existing.CreatedAt,
+                    UpdatedAt = existing.UpdatedAt
                 }
             });
         }
@@ -152,7 +188,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<SubjectResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Subject not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Subject not found"
                 });
 
             context.Subjects.Remove(entity);
@@ -160,12 +198,17 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<SubjectResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Subject deleted successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Subject deleted successfully",
                 Data = new SubjectResponseDto
                 {
-                    SubjectId = entity.SubjectId, SubjectCode = entity.SubjectCode,
-                    SubjectName = entity.SubjectName, SubjectType = entity.SubjectType,
-                    CreatedAt = entity.CreatedAt, UpdatedAt = entity.UpdatedAt
+                    SubjectId = entity.SubjectId,
+                    SubjectCode = entity.SubjectCode,
+                    SubjectName = entity.SubjectName,
+                    SubjectType = entity.SubjectType,
+                    CreatedAt = entity.CreatedAt,
+                    UpdatedAt = entity.UpdatedAt
                 }
             });
         }

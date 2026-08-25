@@ -26,7 +26,8 @@ namespace StudentManagmentSystem.Controllers
 
         private static ProjectAllocationResponseDto MapToDto(ProjectAllocation pa) => new ProjectAllocationResponseDto
         {
-            AllocationId = pa.AllocationId, ProjectId = pa.ProjectId,
+            AllocationId = pa.AllocationId,
+            ProjectId = pa.ProjectId,
             ProjectTitle = pa.Project?.Title ?? string.Empty,
             StudentId = pa.StudentId,
             StudentEnrollmentNumber = pa.Student?.EnrollmentNumber ?? string.Empty,
@@ -34,8 +35,12 @@ namespace StudentManagmentSystem.Controllers
             FacultyId = pa.FacultyId,
             FacultyEmployeeNumber = pa.Faculty?.EmployeeNumber ?? string.Empty,
             FacultyName = pa.Faculty?.User?.UserName ?? string.Empty,
-            FinalScore = pa.FinalScore, Grade = pa.Grade, Status = pa.Status,
-            RepositoryUrl = pa.RepositoryUrl, CreatedAt = pa.CreatedAt, UpdatedAt = pa.UpdatedAt
+            FinalScore = pa.FinalScore,
+            Grade = pa.Grade,
+            Status = pa.Status,
+            RepositoryUrl = pa.RepositoryUrl,
+            CreatedAt = pa.CreatedAt,
+            UpdatedAt = pa.UpdatedAt
         };
 
         [HttpGet]
@@ -49,7 +54,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<ProjectAllocationResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Project allocations retrieved successfully", Data = items
+                Success = true,
+                StatusCode = 200,
+                Message = "Project allocations retrieved successfully",
+                Data = items
             });
         }
 
@@ -65,12 +73,17 @@ namespace StudentManagmentSystem.Controllers
             if (pa is null)
                 return NotFound(new CommonApiResponse<ProjectAllocationResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project allocation not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project allocation not found"
                 });
 
             return Ok(new CommonApiResponse<ProjectAllocationResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project allocation retrieved successfully", Data = MapToDto(pa)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project allocation retrieved successfully",
+                Data = MapToDto(pa)
             });
         }
 
@@ -81,7 +94,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<ProjectAllocationResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -90,14 +105,22 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<ProjectAllocationResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Student is already allocated to this project."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Student is already allocated to this project."
                 });
 
             var entity = new ProjectAllocation
             {
-                ProjectId = dto.ProjectId, StudentId = dto.StudentId, FacultyId = dto.FacultyId,
-                FinalScore = dto.FinalScore, Grade = dto.Grade, Status = dto.Status,
-                RepositoryUrl = dto.RepositoryUrl, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                ProjectId = dto.ProjectId,
+                StudentId = dto.StudentId,
+                FacultyId = dto.FacultyId,
+                FinalScore = dto.FinalScore,
+                Grade = dto.Grade,
+                Status = dto.Status,
+                RepositoryUrl = dto.RepositoryUrl,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.ProjectAllocations.Add(entity);
             await context.SaveChangesAsync();
@@ -112,7 +135,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<ProjectAllocationResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Project allocation created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Project allocation created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -123,7 +149,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<ProjectAllocationResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -131,7 +159,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<ProjectAllocationResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project allocation not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project allocation not found"
                 });
 
             var duplicate = await context.ProjectAllocations.FirstOrDefaultAsync(pa =>
@@ -140,7 +170,9 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<ProjectAllocationResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Student is already allocated to this project."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Student is already allocated to this project."
                 });
 
             existing.ProjectId = dto.ProjectId;
@@ -163,7 +195,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<ProjectAllocationResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project allocation updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project allocation updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -179,7 +214,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<ProjectAllocationResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project allocation not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project allocation not found"
                 });
 
             context.ProjectAllocations.Remove(entity);
@@ -187,7 +224,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<ProjectAllocationResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project allocation deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project allocation deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }

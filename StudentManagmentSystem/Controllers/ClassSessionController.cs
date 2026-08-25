@@ -31,8 +31,12 @@ namespace StudentManagmentSystem.Controllers
             SubjectName = cs.SemesterSubject?.Subject?.SubjectName ?? string.Empty,
             FacultyId = cs.FacultyId,
             FacultyName = cs.Faculty?.User?.UserName ?? string.Empty,
-            SessionDate = cs.SessionDate, StartTime = cs.StartTime, EndTime = cs.EndTime,
-            Topic = cs.Topic, CreatedAt = cs.CreatedAt, UpdatedAt = cs.UpdatedAt
+            SessionDate = cs.SessionDate,
+            StartTime = cs.StartTime,
+            EndTime = cs.EndTime,
+            Topic = cs.Topic,
+            CreatedAt = cs.CreatedAt,
+            UpdatedAt = cs.UpdatedAt
         };
 
         [HttpGet]
@@ -45,7 +49,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<ClassSessionResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Class sessions retrieved successfully", Data = items
+                Success = true,
+                StatusCode = 200,
+                Message = "Class sessions retrieved successfully",
+                Data = items
             });
         }
 
@@ -60,12 +67,17 @@ namespace StudentManagmentSystem.Controllers
             if (cs is null)
                 return NotFound(new CommonApiResponse<ClassSessionResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Class session not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Class session not found"
                 });
 
             return Ok(new CommonApiResponse<ClassSessionResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Class session retrieved successfully", Data = MapToDto(cs)
+                Success = true,
+                StatusCode = 200,
+                Message = "Class session retrieved successfully",
+                Data = MapToDto(cs)
             });
         }
 
@@ -76,15 +88,22 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<ClassSessionResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
             var entity = new ClassSession
             {
-                SemesterSubjectId = dto.SemesterSubjectId, FacultyId = dto.FacultyId,
-                SessionDate = dto.SessionDate, StartTime = dto.StartTime, EndTime = dto.EndTime,
-                Topic = dto.Topic, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                SemesterSubjectId = dto.SemesterSubjectId,
+                FacultyId = dto.FacultyId,
+                SessionDate = dto.SessionDate,
+                StartTime = dto.StartTime,
+                EndTime = dto.EndTime,
+                Topic = dto.Topic,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Set<ClassSession>().Add(entity);
             await context.SaveChangesAsync();
@@ -98,7 +117,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<ClassSessionResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Class session created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Class session created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -109,7 +131,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<ClassSessionResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -117,7 +141,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<ClassSessionResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Class session not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Class session not found"
                 });
 
             existing.SemesterSubjectId = dto.SemesterSubjectId;
@@ -138,7 +164,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<ClassSessionResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Class session updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Class session updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -153,7 +182,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<ClassSessionResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Class session not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Class session not found"
                 });
 
             context.Set<ClassSession>().Remove(entity);
@@ -161,7 +192,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<ClassSessionResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Class session deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Class session deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }

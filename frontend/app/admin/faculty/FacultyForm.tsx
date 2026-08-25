@@ -16,7 +16,7 @@ export default async function FacultyForm({
   mode,
 }: FacultyFormProps) {
   const editing = mode === "edit";
-  const userIdOptions = await getAdminOptions("User");
+  const userIdOptions = await getAdminOptions("Faculty");
   const departmentIdOptions = await getAdminOptions("Department");
   return (
     <section className="mx-auto max-w-4xl space-y-7">

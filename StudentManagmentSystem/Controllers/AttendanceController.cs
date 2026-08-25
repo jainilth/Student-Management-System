@@ -26,14 +26,17 @@ namespace StudentManagmentSystem.Controllers
 
         private static AttendanceResponseDto MapToDto(Attendance a) => new AttendanceResponseDto
         {
-            AttendanceId = a.AttendanceId, StudentSemesterId = a.StudentSemesterId,
+            AttendanceId = a.AttendanceId,
+            StudentSemesterId = a.StudentSemesterId,
             StudentEnrollmentNumber = a.StudentSemester?.Student?.EnrollmentNumber ?? string.Empty,
             StudentName = a.StudentSemester?.Student?.User?.UserName ?? string.Empty,
             SemesterSubjectId = a.SemesterSubjectId,
             SubjectName = a.SemesterSubject?.Subject?.SubjectName ?? string.Empty,
-            ClassesHeld = a.ClassesHeld, ClassesAttended = a.ClassesAttended,
+            ClassesHeld = a.ClassesHeld,
+            ClassesAttended = a.ClassesAttended,
             AttendancePercentage = a.AttendancePercentage,
-            CreatedAt = a.CreatedAt, UpdatedAt = a.UpdatedAt
+            CreatedAt = a.CreatedAt,
+            UpdatedAt = a.UpdatedAt
         };
 
         [HttpGet]
@@ -46,7 +49,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<AttendanceResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Attendance records retrieved successfully", Data = items
+                Success = true,
+                StatusCode = 200,
+                Message = "Attendance records retrieved successfully",
+                Data = items
             });
         }
 
@@ -61,12 +67,17 @@ namespace StudentManagmentSystem.Controllers
             if (a is null)
                 return NotFound(new CommonApiResponse<AttendanceResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Attendance record not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Attendance record not found"
                 });
 
             return Ok(new CommonApiResponse<AttendanceResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Attendance record retrieved successfully", Data = MapToDto(a)
+                Success = true,
+                StatusCode = 200,
+                Message = "Attendance record retrieved successfully",
+                Data = MapToDto(a)
             });
         }
 
@@ -77,7 +88,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<AttendanceResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -86,7 +99,9 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<AttendanceResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Attendance record already exists for this student semester and subject."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Attendance record already exists for this student semester and subject."
                 });
 
             // Auto-calculate attendance percentage
@@ -96,9 +111,13 @@ namespace StudentManagmentSystem.Controllers
 
             var entity = new Attendance
             {
-                StudentSemesterId = dto.StudentSemesterId, SemesterSubjectId = dto.SemesterSubjectId,
-                ClassesHeld = dto.ClassesHeld, ClassesAttended = dto.ClassesAttended,
-                AttendancePercentage = percentage, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                StudentSemesterId = dto.StudentSemesterId,
+                SemesterSubjectId = dto.SemesterSubjectId,
+                ClassesHeld = dto.ClassesHeld,
+                ClassesAttended = dto.ClassesAttended,
+                AttendancePercentage = percentage,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Attendances.Add(entity);
             await context.SaveChangesAsync();
@@ -116,7 +135,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<AttendanceResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Attendance record created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Attendance record created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -127,7 +149,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<AttendanceResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -135,7 +159,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<AttendanceResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Attendance record not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Attendance record not found"
                 });
 
             var duplicate = await context.Attendances.FirstOrDefaultAsync(a =>
@@ -144,7 +170,9 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<AttendanceResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Attendance record already exists for this student semester and subject."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Attendance record already exists for this student semester and subject."
                 });
 
             // Auto-calculate attendance percentage
@@ -173,7 +201,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<AttendanceResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Attendance record updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Attendance record updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -188,7 +219,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<AttendanceResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Attendance record not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Attendance record not found"
                 });
 
             context.Attendances.Remove(entity);
@@ -196,7 +229,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<AttendanceResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Attendance record deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Attendance record deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }

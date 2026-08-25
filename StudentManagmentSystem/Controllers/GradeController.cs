@@ -30,13 +30,20 @@ namespace StudentManagmentSystem.Controllers
         {
             var grades = await context.Set<Grade>().Select(g => new GradeResponseDto
             {
-                GradeId = g.GradeId, GradeCode = g.GradeCode, GradeName = g.GradeName,
-                GradePoint = g.GradePoint, MinMarks = g.MinMarks, MaxMarks = g.MaxMarks
+                GradeId = g.GradeId,
+                GradeCode = g.GradeCode,
+                GradeName = g.GradeName,
+                GradePoint = g.GradePoint,
+                MinMarks = g.MinMarks,
+                MaxMarks = g.MaxMarks
             }).ToListAsync();
 
             return Ok(new CommonApiResponse<List<GradeResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Grades retrieved successfully", Data = grades
+                Success = true,
+                StatusCode = 200,
+                Message = "Grades retrieved successfully",
+                Data = grades
             });
         }
 
@@ -47,16 +54,24 @@ namespace StudentManagmentSystem.Controllers
             if (g is null)
                 return NotFound(new CommonApiResponse<GradeResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Grade not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Grade not found"
                 });
 
             return Ok(new CommonApiResponse<GradeResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Grade retrieved successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Grade retrieved successfully",
                 Data = new GradeResponseDto
                 {
-                    GradeId = g.GradeId, GradeCode = g.GradeCode, GradeName = g.GradeName,
-                    GradePoint = g.GradePoint, MinMarks = g.MinMarks, MaxMarks = g.MaxMarks
+                    GradeId = g.GradeId,
+                    GradeCode = g.GradeCode,
+                    GradeName = g.GradeName,
+                    GradePoint = g.GradePoint,
+                    MinMarks = g.MinMarks,
+                    MaxMarks = g.MaxMarks
                 }
             });
         }
@@ -68,7 +83,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<GradeResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -76,24 +93,35 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<GradeResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Grade code is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Grade code is already in use."
                 });
 
             var entity = new Grade
             {
-                GradeCode = dto.GradeCode, GradeName = dto.GradeName,
-                GradePoint = dto.GradePoint, MinMarks = dto.MinMarks, MaxMarks = dto.MaxMarks
+                GradeCode = dto.GradeCode,
+                GradeName = dto.GradeName,
+                GradePoint = dto.GradePoint,
+                MinMarks = dto.MinMarks,
+                MaxMarks = dto.MaxMarks
             };
             context.Set<Grade>().Add(entity);
             await context.SaveChangesAsync();
 
             return StatusCode(201, new CommonApiResponse<GradeResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Grade created successfully",
+                Success = true,
+                StatusCode = 201,
+                Message = "Grade created successfully",
                 Data = new GradeResponseDto
                 {
-                    GradeId = entity.GradeId, GradeCode = entity.GradeCode, GradeName = entity.GradeName,
-                    GradePoint = entity.GradePoint, MinMarks = entity.MinMarks, MaxMarks = entity.MaxMarks
+                    GradeId = entity.GradeId,
+                    GradeCode = entity.GradeCode,
+                    GradeName = entity.GradeName,
+                    GradePoint = entity.GradePoint,
+                    MinMarks = entity.MinMarks,
+                    MaxMarks = entity.MaxMarks
                 }
             });
         }
@@ -105,7 +133,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<GradeResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -113,7 +143,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<GradeResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Grade not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Grade not found"
                 });
 
             var duplicate = await context.Set<Grade>().FirstOrDefaultAsync(g =>
@@ -121,7 +153,9 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<GradeResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Grade code is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Grade code is already in use."
                 });
 
             existing.GradeCode = dto.GradeCode;
@@ -133,11 +167,17 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<GradeResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Grade updated successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Grade updated successfully",
                 Data = new GradeResponseDto
                 {
-                    GradeId = existing.GradeId, GradeCode = existing.GradeCode, GradeName = existing.GradeName,
-                    GradePoint = existing.GradePoint, MinMarks = existing.MinMarks, MaxMarks = existing.MaxMarks
+                    GradeId = existing.GradeId,
+                    GradeCode = existing.GradeCode,
+                    GradeName = existing.GradeName,
+                    GradePoint = existing.GradePoint,
+                    MinMarks = existing.MinMarks,
+                    MaxMarks = existing.MaxMarks
                 }
             });
         }
@@ -149,7 +189,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<GradeResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Grade not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Grade not found"
                 });
 
             context.Set<Grade>().Remove(entity);
@@ -157,11 +199,17 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<GradeResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Grade deleted successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Grade deleted successfully",
                 Data = new GradeResponseDto
                 {
-                    GradeId = entity.GradeId, GradeCode = entity.GradeCode, GradeName = entity.GradeName,
-                    GradePoint = entity.GradePoint, MinMarks = entity.MinMarks, MaxMarks = entity.MaxMarks
+                    GradeId = entity.GradeId,
+                    GradeCode = entity.GradeCode,
+                    GradeName = entity.GradeName,
+                    GradePoint = entity.GradePoint,
+                    MinMarks = entity.MinMarks,
+                    MaxMarks = entity.MaxMarks
                 }
             });
         }

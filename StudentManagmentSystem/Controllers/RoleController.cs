@@ -21,7 +21,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllRoles()
         {
-            var roles = await context.Roles.Select(r => new ResponseDto 
+            var roles = await context.Roles.Select(r => new ResponseDto
             {
                 RoleId = r.RoleId,
                 RoleName = r.RoleName
@@ -52,10 +52,10 @@ namespace StudentManagmentSystem.Controllers
                 Success = true,
                 StatusCode = 200,
                 Message = "Role retrieved successfully",
-                Data = new ResponseDto 
-                { 
-                    RoleId = role.RoleId, 
-                    RoleName = role.RoleName 
+                Data = new ResponseDto
+                {
+                    RoleId = role.RoleId,
+                    RoleName = role.RoleName
                 }
             });
         }
@@ -72,10 +72,10 @@ namespace StudentManagmentSystem.Controllers
                 Success = true,
                 StatusCode = 201,
                 Message = "Role created successfully",
-                Data = new ResponseDto 
-                { 
-                    RoleId = role.RoleId, 
-                    RoleName = role.RoleName 
+                Data = new ResponseDto
+                {
+                    RoleId = role.RoleId,
+                    RoleName = role.RoleName
                 }
             });
         }
@@ -98,10 +98,10 @@ namespace StudentManagmentSystem.Controllers
                 Success = true,
                 StatusCode = 200,
                 Message = "Role updated successfully",
-                Data = new ResponseDto 
-                { 
-                    RoleId = existing.RoleId, 
-                    RoleName = existing.RoleName 
+                Data = new ResponseDto
+                {
+                    RoleId = existing.RoleId,
+                    RoleName = existing.RoleName
                 }
             });
         }
@@ -117,16 +117,16 @@ namespace StudentManagmentSystem.Controllers
 
             context.Roles.Remove(role);
             await context.SaveChangesAsync();
-            
+
             return Ok(new CommonApiResponse<ResponseDto>
             {
                 Success = true,
                 StatusCode = 200,
                 Message = "Role deleted successfully",
-                Data = new ResponseDto 
-                { 
-                    RoleId = role.RoleId, 
-                    RoleName = role.RoleName 
+                Data = new ResponseDto
+                {
+                    RoleId = role.RoleId,
+                    RoleName = role.RoleName
                 }
             });
         }

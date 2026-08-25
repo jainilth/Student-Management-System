@@ -3,7 +3,7 @@ using StudentManagmentSystem.Dto;
 
 namespace StudentManagmentSystem.Validators.User
 {
-    public class CreateUserValidator:AbstractValidator<CreateUserDto>
+    public class CreateUserValidator : AbstractValidator<CreateUserDto>
     {
         public CreateUserValidator()
         {

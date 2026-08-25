@@ -30,14 +30,20 @@ namespace StudentManagmentSystem.Controllers
         {
             var semesters = await context.Semesters.Select(s => new SemesterResponseDto
             {
-                SemesterId = s.SemesterId, SemesterNumber = s.SemesterNumber,
-                SemesterName = s.SemesterName, IsActive = s.IsActive,
-                CreatedAt = s.CreatedAt, UpdatedAt = s.UpdatedAt
+                SemesterId = s.SemesterId,
+                SemesterNumber = s.SemesterNumber,
+                SemesterName = s.SemesterName,
+                IsActive = s.IsActive,
+                CreatedAt = s.CreatedAt,
+                UpdatedAt = s.UpdatedAt
             }).ToListAsync();
 
             return Ok(new CommonApiResponse<List<SemesterResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Semesters retrieved successfully", Data = semesters
+                Success = true,
+                StatusCode = 200,
+                Message = "Semesters retrieved successfully",
+                Data = semesters
             });
         }
 
@@ -48,17 +54,24 @@ namespace StudentManagmentSystem.Controllers
             if (s is null)
                 return NotFound(new CommonApiResponse<SemesterResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Semester not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Semester not found"
                 });
 
             return Ok(new CommonApiResponse<SemesterResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Semester retrieved successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Semester retrieved successfully",
                 Data = new SemesterResponseDto
                 {
-                    SemesterId = s.SemesterId, SemesterNumber = s.SemesterNumber,
-                    SemesterName = s.SemesterName, IsActive = s.IsActive,
-                    CreatedAt = s.CreatedAt, UpdatedAt = s.UpdatedAt
+                    SemesterId = s.SemesterId,
+                    SemesterNumber = s.SemesterNumber,
+                    SemesterName = s.SemesterName,
+                    IsActive = s.IsActive,
+                    CreatedAt = s.CreatedAt,
+                    UpdatedAt = s.UpdatedAt
                 }
             });
         }
@@ -70,7 +83,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<SemesterResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -81,26 +96,36 @@ namespace StudentManagmentSystem.Controllers
                 string field = duplicate.SemesterNumber == dto.SemesterNumber ? "Semester number" : "Semester name";
                 return BadRequest(new CommonApiResponse<SemesterResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = $"{field} is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{field} is already in use."
                 });
             }
 
             var entity = new Semester
             {
-                SemesterNumber = dto.SemesterNumber, SemesterName = dto.SemesterName,
-                IsActive = dto.IsActive, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                SemesterNumber = dto.SemesterNumber,
+                SemesterName = dto.SemesterName,
+                IsActive = dto.IsActive,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Semesters.Add(entity);
             await context.SaveChangesAsync();
 
             return StatusCode(201, new CommonApiResponse<SemesterResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Semester created successfully",
+                Success = true,
+                StatusCode = 201,
+                Message = "Semester created successfully",
                 Data = new SemesterResponseDto
                 {
-                    SemesterId = entity.SemesterId, SemesterNumber = entity.SemesterNumber,
-                    SemesterName = entity.SemesterName, IsActive = entity.IsActive,
-                    CreatedAt = entity.CreatedAt, UpdatedAt = entity.UpdatedAt
+                    SemesterId = entity.SemesterId,
+                    SemesterNumber = entity.SemesterNumber,
+                    SemesterName = entity.SemesterName,
+                    IsActive = entity.IsActive,
+                    CreatedAt = entity.CreatedAt,
+                    UpdatedAt = entity.UpdatedAt
                 }
             });
         }
@@ -112,7 +137,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<SemesterResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -120,7 +147,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<SemesterResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Semester not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Semester not found"
                 });
 
             var duplicate = await context.Semesters.FirstOrDefaultAsync(s =>
@@ -130,7 +159,9 @@ namespace StudentManagmentSystem.Controllers
                 string field = duplicate.SemesterNumber == dto.SemesterNumber ? "Semester number" : "Semester name";
                 return BadRequest(new CommonApiResponse<SemesterResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = $"{field} is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{field} is already in use."
                 });
             }
 
@@ -142,12 +173,17 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<SemesterResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Semester updated successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Semester updated successfully",
                 Data = new SemesterResponseDto
                 {
-                    SemesterId = existing.SemesterId, SemesterNumber = existing.SemesterNumber,
-                    SemesterName = existing.SemesterName, IsActive = existing.IsActive,
-                    CreatedAt = existing.CreatedAt, UpdatedAt = existing.UpdatedAt
+                    SemesterId = existing.SemesterId,
+                    SemesterNumber = existing.SemesterNumber,
+                    SemesterName = existing.SemesterName,
+                    IsActive = existing.IsActive,
+                    CreatedAt = existing.CreatedAt,
+                    UpdatedAt = existing.UpdatedAt
                 }
             });
         }
@@ -159,7 +195,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<SemesterResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Semester not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Semester not found"
                 });
 
             context.Semesters.Remove(entity);
@@ -167,12 +205,17 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<SemesterResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Semester deleted successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Semester deleted successfully",
                 Data = new SemesterResponseDto
                 {
-                    SemesterId = entity.SemesterId, SemesterNumber = entity.SemesterNumber,
-                    SemesterName = entity.SemesterName, IsActive = entity.IsActive,
-                    CreatedAt = entity.CreatedAt, UpdatedAt = entity.UpdatedAt
+                    SemesterId = entity.SemesterId,
+                    SemesterNumber = entity.SemesterNumber,
+                    SemesterName = entity.SemesterName,
+                    IsActive = entity.IsActive,
+                    CreatedAt = entity.CreatedAt,
+                    UpdatedAt = entity.UpdatedAt
                 }
             });
         }

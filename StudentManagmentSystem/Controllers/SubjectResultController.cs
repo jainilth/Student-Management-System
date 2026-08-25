@@ -26,16 +26,22 @@ namespace StudentManagmentSystem.Controllers
 
         private static SubjectResultResponseDto MapToDto(SubjectResult sr) => new SubjectResultResponseDto
         {
-            SubjectResultId = sr.SubjectResultId, SemesterResultId = sr.SemesterResultId,
+            SubjectResultId = sr.SubjectResultId,
+            SemesterResultId = sr.SemesterResultId,
             StudentEnrollmentNumber = sr.SemesterResult?.StudentSemester?.Student?.EnrollmentNumber ?? string.Empty,
             StudentName = sr.SemesterResult?.StudentSemester?.Student?.User?.UserName ?? string.Empty,
             SemesterSubjectId = sr.SemesterSubjectId,
             SubjectName = sr.SemesterSubject?.Subject?.SubjectName ?? string.Empty,
-            InternalMarks = sr.InternalMarks, ExternalMarks = sr.ExternalMarks,
-            PracticalMarks = sr.PracticalMarks, TotalMarks = sr.TotalMarks,
-            GradeId = sr.GradeId, GradeCode = sr.Grade?.GradeCode ?? string.Empty,
-            CreditsEarned = sr.CreditsEarned, ResultStatus = sr.ResultStatus,
-            CreatedAt = sr.CreatedAt, UpdatedAt = sr.UpdatedAt
+            InternalMarks = sr.InternalMarks,
+            ExternalMarks = sr.ExternalMarks,
+            PracticalMarks = sr.PracticalMarks,
+            TotalMarks = sr.TotalMarks,
+            GradeId = sr.GradeId,
+            GradeCode = sr.Grade?.GradeCode ?? string.Empty,
+            CreditsEarned = sr.CreditsEarned,
+            ResultStatus = sr.ResultStatus,
+            CreatedAt = sr.CreatedAt,
+            UpdatedAt = sr.UpdatedAt
         };
 
         [HttpGet]
@@ -49,7 +55,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<SubjectResultResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Subject results retrieved successfully", Data = items
+                Success = true,
+                StatusCode = 200,
+                Message = "Subject results retrieved successfully",
+                Data = items
             });
         }
 
@@ -65,12 +74,17 @@ namespace StudentManagmentSystem.Controllers
             if (sr is null)
                 return NotFound(new CommonApiResponse<SubjectResultResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Subject result not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Subject result not found"
                 });
 
             return Ok(new CommonApiResponse<SubjectResultResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Subject result retrieved successfully", Data = MapToDto(sr)
+                Success = true,
+                StatusCode = 200,
+                Message = "Subject result retrieved successfully",
+                Data = MapToDto(sr)
             });
         }
 
@@ -81,7 +95,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<SubjectResultResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -90,16 +106,24 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<SubjectResultResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "A result already exists for this subject in the given semester result."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "A result already exists for this subject in the given semester result."
                 });
 
             var entity = new SubjectResult
             {
-                SemesterResultId = dto.SemesterResultId, SemesterSubjectId = dto.SemesterSubjectId,
-                InternalMarks = dto.InternalMarks, ExternalMarks = dto.ExternalMarks,
-                PracticalMarks = dto.PracticalMarks, TotalMarks = dto.TotalMarks,
-                GradeId = dto.GradeId, CreditsEarned = dto.CreditsEarned,
-                ResultStatus = dto.ResultStatus, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                SemesterResultId = dto.SemesterResultId,
+                SemesterSubjectId = dto.SemesterSubjectId,
+                InternalMarks = dto.InternalMarks,
+                ExternalMarks = dto.ExternalMarks,
+                PracticalMarks = dto.PracticalMarks,
+                TotalMarks = dto.TotalMarks,
+                GradeId = dto.GradeId,
+                CreditsEarned = dto.CreditsEarned,
+                ResultStatus = dto.ResultStatus,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.SubjectResults.Add(entity);
             await context.SaveChangesAsync();
@@ -122,7 +146,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<SubjectResultResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Subject result created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Subject result created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -133,7 +160,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<SubjectResultResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -141,7 +170,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<SubjectResultResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Subject result not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Subject result not found"
                 });
 
             var duplicate = await context.SubjectResults.FirstOrDefaultAsync(sr =>
@@ -150,7 +181,9 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<SubjectResultResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "A result already exists for this subject in the given semester result."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "A result already exists for this subject in the given semester result."
                 });
 
             existing.SemesterResultId = dto.SemesterResultId;
@@ -183,7 +216,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<SubjectResultResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Subject result updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Subject result updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -199,7 +235,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<SubjectResultResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Subject result not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Subject result not found"
                 });
 
             context.SubjectResults.Remove(entity);
@@ -207,7 +245,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<SubjectResultResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Subject result deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Subject result deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }

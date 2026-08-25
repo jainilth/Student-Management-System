@@ -26,11 +26,17 @@ namespace StudentManagmentSystem.Controllers
 
         private static ProjectResponseDto MapToDto(Project p) => new ProjectResponseDto
         {
-            ProjectId = p.ProjectId, Title = p.Title, Description = p.Description,
-            SemesterId = p.SemesterId, SemesterName = p.Semester != null ? p.Semester.SemesterName : string.Empty,
-            ProgramId = p.ProgramId, ProgramName = p.AcademicProgram != null ? p.AcademicProgram.ProgramName : string.Empty,
-            StartDate = p.StartDate, EndDate = p.EndDate,
-            CreatedAt = p.CreatedAt, UpdatedAt = p.UpdatedAt
+            ProjectId = p.ProjectId,
+            Title = p.Title,
+            Description = p.Description,
+            SemesterId = p.SemesterId,
+            SemesterName = p.Semester != null ? p.Semester.SemesterName : string.Empty,
+            ProgramId = p.ProgramId,
+            ProgramName = p.AcademicProgram != null ? p.AcademicProgram.ProgramName : string.Empty,
+            StartDate = p.StartDate,
+            EndDate = p.EndDate,
+            CreatedAt = p.CreatedAt,
+            UpdatedAt = p.UpdatedAt
         };
 
         [HttpGet]
@@ -43,7 +49,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<ProjectResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Projects retrieved successfully", Data = items
+                Success = true,
+                StatusCode = 200,
+                Message = "Projects retrieved successfully",
+                Data = items
             });
         }
 
@@ -58,12 +67,17 @@ namespace StudentManagmentSystem.Controllers
             if (p is null)
                 return NotFound(new CommonApiResponse<ProjectResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project not found"
                 });
 
             return Ok(new CommonApiResponse<ProjectResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project retrieved successfully", Data = MapToDto(p)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project retrieved successfully",
+                Data = MapToDto(p)
             });
         }
 
@@ -74,16 +88,22 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<ProjectResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
             var entity = new Project
             {
-                Title = dto.Title, Description = dto.Description,
-                SemesterId = dto.SemesterId, ProgramId = dto.ProgramId,
-                StartDate = dto.StartDate, EndDate = dto.EndDate,
-                CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                Title = dto.Title,
+                Description = dto.Description,
+                SemesterId = dto.SemesterId,
+                ProgramId = dto.ProgramId,
+                StartDate = dto.StartDate,
+                EndDate = dto.EndDate,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Projects.Add(entity);
             await context.SaveChangesAsync();
@@ -93,7 +113,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<ProjectResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Project created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Project created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -104,7 +127,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<ProjectResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -112,7 +137,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<ProjectResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project not found"
                 });
 
             existing.Title = dto.Title;
@@ -129,7 +156,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<ProjectResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -144,7 +174,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<ProjectResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project not found"
                 });
 
             context.Projects.Remove(entity);
@@ -152,7 +184,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<ProjectResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }

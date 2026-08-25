@@ -41,7 +41,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<DepartmentResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Departments retrieved successfully", Data = departments
+                Success = true,
+                StatusCode = 200,
+                Message = "Departments retrieved successfully",
+                Data = departments
             });
         }
 
@@ -52,17 +55,25 @@ namespace StudentManagmentSystem.Controllers
             if (d is null)
                 return NotFound(new CommonApiResponse<DepartmentResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Department not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Department not found"
                 });
 
             return Ok(new CommonApiResponse<DepartmentResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Department retrieved successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Department retrieved successfully",
                 Data = new DepartmentResponseDto
                 {
-                    DepartmentId = d.DepartmentId, DepartmentName = d.DepartmentName,
-                    DepartmentCode = d.DepartmentCode, Description = d.Description,
-                    IsActive = d.IsActive, CreatedAt = d.CreatedAt, UpdatedAt = d.UpdatedAt
+                    DepartmentId = d.DepartmentId,
+                    DepartmentName = d.DepartmentName,
+                    DepartmentCode = d.DepartmentCode,
+                    Description = d.Description,
+                    IsActive = d.IsActive,
+                    CreatedAt = d.CreatedAt,
+                    UpdatedAt = d.UpdatedAt
                 }
             });
         }
@@ -74,7 +85,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<DepartmentResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -85,7 +98,9 @@ namespace StudentManagmentSystem.Controllers
                 string field = duplicate.DepartmentCode == dto.DepartmentCode ? "Department code" : "Department name";
                 return BadRequest(new CommonApiResponse<DepartmentResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = $"{field} is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{field} is already in use."
                 });
             }
 
@@ -103,12 +118,18 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<DepartmentResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Department created successfully",
+                Success = true,
+                StatusCode = 201,
+                Message = "Department created successfully",
                 Data = new DepartmentResponseDto
                 {
-                    DepartmentId = entity.DepartmentId, DepartmentName = entity.DepartmentName,
-                    DepartmentCode = entity.DepartmentCode, Description = entity.Description,
-                    IsActive = entity.IsActive, CreatedAt = entity.CreatedAt, UpdatedAt = entity.UpdatedAt
+                    DepartmentId = entity.DepartmentId,
+                    DepartmentName = entity.DepartmentName,
+                    DepartmentCode = entity.DepartmentCode,
+                    Description = entity.Description,
+                    IsActive = entity.IsActive,
+                    CreatedAt = entity.CreatedAt,
+                    UpdatedAt = entity.UpdatedAt
                 }
             });
         }
@@ -120,7 +141,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<DepartmentResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -128,7 +151,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<DepartmentResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Department not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Department not found"
                 });
 
             var duplicate = await context.Departments.FirstOrDefaultAsync(d =>
@@ -138,7 +163,9 @@ namespace StudentManagmentSystem.Controllers
                 string field = duplicate.DepartmentCode == dto.DepartmentCode ? "Department code" : "Department name";
                 return BadRequest(new CommonApiResponse<DepartmentResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = $"{field} is already in use."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{field} is already in use."
                 });
             }
 
@@ -151,12 +178,18 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<DepartmentResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Department updated successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Department updated successfully",
                 Data = new DepartmentResponseDto
                 {
-                    DepartmentId = existing.DepartmentId, DepartmentName = existing.DepartmentName,
-                    DepartmentCode = existing.DepartmentCode, Description = existing.Description,
-                    IsActive = existing.IsActive, CreatedAt = existing.CreatedAt, UpdatedAt = existing.UpdatedAt
+                    DepartmentId = existing.DepartmentId,
+                    DepartmentName = existing.DepartmentName,
+                    DepartmentCode = existing.DepartmentCode,
+                    Description = existing.Description,
+                    IsActive = existing.IsActive,
+                    CreatedAt = existing.CreatedAt,
+                    UpdatedAt = existing.UpdatedAt
                 }
             });
         }
@@ -168,7 +201,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<DepartmentResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Department not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Department not found"
                 });
 
             context.Departments.Remove(entity);
@@ -176,12 +211,18 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<DepartmentResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Department deleted successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Department deleted successfully",
                 Data = new DepartmentResponseDto
                 {
-                    DepartmentId = entity.DepartmentId, DepartmentName = entity.DepartmentName,
-                    DepartmentCode = entity.DepartmentCode, Description = entity.Description,
-                    IsActive = entity.IsActive, CreatedAt = entity.CreatedAt, UpdatedAt = entity.UpdatedAt
+                    DepartmentId = entity.DepartmentId,
+                    DepartmentName = entity.DepartmentName,
+                    DepartmentCode = entity.DepartmentCode,
+                    Description = entity.Description,
+                    IsActive = entity.IsActive,
+                    CreatedAt = entity.CreatedAt,
+                    UpdatedAt = entity.UpdatedAt
                 }
             });
         }

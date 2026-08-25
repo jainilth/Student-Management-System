@@ -27,13 +27,19 @@ namespace StudentManagmentSystem.Controllers
 
         private static MaterialResponseDto MapToDto(Material m) => new MaterialResponseDto
         {
-            MaterialId = m.MaterialId, Title = m.Title, Description = m.Description,
+            MaterialId = m.MaterialId,
+            Title = m.Title,
+            Description = m.Description,
             SemesterSubjectId = m.SemesterSubjectId,
             SubjectName = m.SemesterSubject?.Subject?.SubjectName ?? string.Empty,
             UploadedBy = m.UploadedBy,
             UploadedByUserName = m.UploadedByUser != null ? m.UploadedByUser.UserName : string.Empty,
-            MaterialType = m.MaterialType, FileName = m.FileName, FileUrl = m.FileUrl,
-            FileSize = m.FileSize, CreatedAt = m.CreatedAt, UpdatedAt = m.UpdatedAt
+            MaterialType = m.MaterialType,
+            FileName = m.FileName,
+            FileUrl = m.FileUrl,
+            FileSize = m.FileSize,
+            CreatedAt = m.CreatedAt,
+            UpdatedAt = m.UpdatedAt
         };
 
         [HttpGet]
@@ -47,7 +53,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<MaterialResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Materials retrieved successfully", Data = items
+                Success = true,
+                StatusCode = 200,
+                Message = "Materials retrieved successfully",
+                Data = items
             });
         }
 
@@ -62,12 +71,17 @@ namespace StudentManagmentSystem.Controllers
             if (m is null)
                 return NotFound(new CommonApiResponse<MaterialResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Material not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Material not found"
                 });
 
             return Ok(new CommonApiResponse<MaterialResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Material retrieved successfully", Data = MapToDto(m)
+                Success = true,
+                StatusCode = 200,
+                Message = "Material retrieved successfully",
+                Data = MapToDto(m)
             });
         }
 
@@ -78,17 +92,24 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<MaterialResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
             var entity = new Material
             {
-                Title = dto.Title, Description = dto.Description,
-                SemesterSubjectId = dto.SemesterSubjectId, UploadedBy = dto.UploadedBy,
-                MaterialType = dto.MaterialType, FileName = dto.FileName,
-                FileUrl = dto.FileUrl, FileSize = dto.FileSize,
-                CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                Title = dto.Title,
+                Description = dto.Description,
+                SemesterSubjectId = dto.SemesterSubjectId,
+                UploadedBy = dto.UploadedBy,
+                MaterialType = dto.MaterialType,
+                FileName = dto.FileName,
+                FileUrl = dto.FileUrl,
+                FileSize = dto.FileSize,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.Materials.Add(entity);
             await context.SaveChangesAsync();
@@ -100,7 +121,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<MaterialResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Material created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Material created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -111,7 +135,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<MaterialResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -119,7 +145,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<MaterialResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Material not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Material not found"
                 });
 
             existing.Title = dto.Title;
@@ -140,7 +168,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<MaterialResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Material updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Material updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -155,7 +186,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<MaterialResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Material not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Material not found"
                 });
 
             context.Materials.Remove(entity);
@@ -163,7 +196,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<MaterialResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Material deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Material deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }

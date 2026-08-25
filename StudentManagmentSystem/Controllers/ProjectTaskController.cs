@@ -26,15 +26,23 @@ namespace StudentManagmentSystem.Controllers
 
         private static ProjectTaskResponseDto MapToDto(ProjectTask pt) => new ProjectTaskResponseDto
         {
-            TaskId = pt.TaskId, ProjectAllocationId = pt.ProjectAllocationId,
+            TaskId = pt.TaskId,
+            ProjectAllocationId = pt.ProjectAllocationId,
             ProjectTitle = pt.ProjectAllocation?.Project?.Title ?? string.Empty,
             StudentEnrollmentNumber = pt.ProjectAllocation?.Student?.EnrollmentNumber ?? string.Empty,
             StudentName = pt.ProjectAllocation?.Student?.User?.UserName ?? string.Empty,
-            TaskTitle = pt.TaskTitle, TaskDescription = pt.TaskDescription,
-            TaskStatus = pt.TaskStatus, AssignedScore = pt.AssignedScore,
-            EarnedScore = pt.EarnedScore, StartDate = pt.StartDate, DueDate = pt.DueDate,
-            CompletedDate = pt.CompletedDate, FacultyRemarks = pt.FacultyRemarks,
-            StudentRemarks = pt.StudentRemarks, CreatedAt = pt.CreatedAt, UpdatedAt = pt.UpdatedAt
+            TaskTitle = pt.TaskTitle,
+            TaskDescription = pt.TaskDescription,
+            TaskStatus = pt.TaskStatus,
+            AssignedScore = pt.AssignedScore,
+            EarnedScore = pt.EarnedScore,
+            StartDate = pt.StartDate,
+            DueDate = pt.DueDate,
+            CompletedDate = pt.CompletedDate,
+            FacultyRemarks = pt.FacultyRemarks,
+            StudentRemarks = pt.StudentRemarks,
+            CreatedAt = pt.CreatedAt,
+            UpdatedAt = pt.UpdatedAt
         };
 
         [HttpGet]
@@ -47,7 +55,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<List<ProjectTaskResponseDto>>
             {
-                Success = true, StatusCode = 200, Message = "Project tasks retrieved successfully", Data = items
+                Success = true,
+                StatusCode = 200,
+                Message = "Project tasks retrieved successfully",
+                Data = items
             });
         }
 
@@ -61,12 +72,17 @@ namespace StudentManagmentSystem.Controllers
             if (pt is null)
                 return NotFound(new CommonApiResponse<ProjectTaskResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project task not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project task not found"
                 });
 
             return Ok(new CommonApiResponse<ProjectTaskResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project task retrieved successfully", Data = MapToDto(pt)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project task retrieved successfully",
+                Data = MapToDto(pt)
             });
         }
 
@@ -77,18 +93,27 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<ProjectTaskResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
             var entity = new ProjectTask
             {
-                ProjectAllocationId = dto.ProjectAllocationId, TaskTitle = dto.TaskTitle,
-                TaskDescription = dto.TaskDescription, TaskStatus = dto.TaskStatus,
-                AssignedScore = dto.AssignedScore, EarnedScore = dto.EarnedScore,
-                StartDate = dto.StartDate, DueDate = dto.DueDate, CompletedDate = dto.CompletedDate,
-                FacultyRemarks = dto.FacultyRemarks, StudentRemarks = dto.StudentRemarks,
-                CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
+                ProjectAllocationId = dto.ProjectAllocationId,
+                TaskTitle = dto.TaskTitle,
+                TaskDescription = dto.TaskDescription,
+                TaskStatus = dto.TaskStatus,
+                AssignedScore = dto.AssignedScore,
+                EarnedScore = dto.EarnedScore,
+                StartDate = dto.StartDate,
+                DueDate = dto.DueDate,
+                CompletedDate = dto.CompletedDate,
+                FacultyRemarks = dto.FacultyRemarks,
+                StudentRemarks = dto.StudentRemarks,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
             context.ProjectTasks.Add(entity);
             await context.SaveChangesAsync();
@@ -104,7 +129,10 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<ProjectTaskResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Project task created successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 201,
+                Message = "Project task created successfully",
+                Data = MapToDto(entity)
             });
         }
 
@@ -115,7 +143,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<ProjectTaskResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -123,7 +153,9 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<ProjectTaskResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project task not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project task not found"
                 });
 
             existing.ProjectAllocationId = dto.ProjectAllocationId;
@@ -151,7 +183,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<ProjectTaskResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project task updated successfully", Data = MapToDto(existing)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project task updated successfully",
+                Data = MapToDto(existing)
             });
         }
 
@@ -165,7 +200,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<ProjectTaskResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Project task not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Project task not found"
                 });
 
             context.ProjectTasks.Remove(entity);
@@ -173,7 +210,10 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<ProjectTaskResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Project task deleted successfully", Data = MapToDto(entity)
+                Success = true,
+                StatusCode = 200,
+                Message = "Project task deleted successfully",
+                Data = MapToDto(entity)
             });
         }
     }

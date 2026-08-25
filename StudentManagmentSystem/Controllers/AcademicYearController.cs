@@ -50,7 +50,9 @@ namespace StudentManagmentSystem.Controllers
             if (year is null)
                 return NotFound(new CommonApiResponse<AcademicYearResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Academic year not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Academic year not found"
                 });
 
             return Ok(new CommonApiResponse<AcademicYearResponseDto>
@@ -69,7 +71,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<AcademicYearResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -77,7 +81,9 @@ namespace StudentManagmentSystem.Controllers
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<AcademicYearResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Academic year already exists."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Academic year already exists."
                 });
 
             var entity = new AcademicYear { Year = dto.Year };
@@ -86,7 +92,9 @@ namespace StudentManagmentSystem.Controllers
 
             return StatusCode(201, new CommonApiResponse<AcademicYearResponseDto>
             {
-                Success = true, StatusCode = 201, Message = "Academic year created successfully",
+                Success = true,
+                StatusCode = 201,
+                Message = "Academic year created successfully",
                 Data = new AcademicYearResponseDto { AcademicYearId = entity.AcademicYearId, Year = entity.Year }
             });
         }
@@ -98,7 +106,9 @@ namespace StudentManagmentSystem.Controllers
             if (!validation.IsValid)
                 return BadRequest(new CommonApiResponse<AcademicYearResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Validation failed",
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Validation failed",
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
@@ -106,14 +116,18 @@ namespace StudentManagmentSystem.Controllers
             if (existing is null)
                 return NotFound(new CommonApiResponse<AcademicYearResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Academic year not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Academic year not found"
                 });
 
             var duplicate = await context.Set<AcademicYear>().FirstOrDefaultAsync(y => y.Year == dto.Year && y.AcademicYearId != id);
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<AcademicYearResponseDto>
                 {
-                    Success = false, StatusCode = 400, Message = "Academic year already exists."
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Academic year already exists."
                 });
 
             existing.Year = dto.Year;
@@ -121,7 +135,9 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<AcademicYearResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Academic year updated successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Academic year updated successfully",
                 Data = new AcademicYearResponseDto { AcademicYearId = existing.AcademicYearId, Year = existing.Year }
             });
         }
@@ -133,7 +149,9 @@ namespace StudentManagmentSystem.Controllers
             if (entity is null)
                 return NotFound(new CommonApiResponse<AcademicYearResponseDto>
                 {
-                    Success = false, StatusCode = 404, Message = "Academic year not found"
+                    Success = false,
+                    StatusCode = 404,
+                    Message = "Academic year not found"
                 });
 
             context.Set<AcademicYear>().Remove(entity);
@@ -141,7 +159,9 @@ namespace StudentManagmentSystem.Controllers
 
             return Ok(new CommonApiResponse<AcademicYearResponseDto>
             {
-                Success = true, StatusCode = 200, Message = "Academic year deleted successfully",
+                Success = true,
+                StatusCode = 200,
+                Message = "Academic year deleted successfully",
                 Data = new AcademicYearResponseDto { AcademicYearId = entity.AcademicYearId, Year = entity.Year }
             });
         }
