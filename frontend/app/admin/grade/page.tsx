@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AdminDeleteForm from "@/components/AdminDeleteForm";
 import { revalidatePath } from "next/cache";
 import { GetAllGrades, DeleteGrade } from "@/service/grade.service";
 
@@ -10,7 +11,7 @@ export default async function GradeListPage() {
   if (response?.error)
     return (
       <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-red-700">
-        <strong>API Error:</strong> {response.error}
+        {response.error}
       </div>
     );
   const records = Array.isArray(data) ? data : [];
@@ -92,7 +93,7 @@ export default async function GradeListPage() {
                         >
                           Edit
                         </Link>
-                        <form action={removeRecord}>
+                        <AdminDeleteForm action={removeRecord}>
                           <input
                             type="hidden"
                             name="gradeId"
@@ -104,7 +105,7 @@ export default async function GradeListPage() {
                           >
                             Delete
                           </button>
-                        </form>
+                        </AdminDeleteForm>
                       </div>
                     </td>
                   </tr>

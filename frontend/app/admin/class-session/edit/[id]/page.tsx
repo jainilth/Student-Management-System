@@ -15,7 +15,7 @@ export default async function EditClassSessionPage({ params }: Props) {
   if (response?.error)
     return (
       <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-red-700">
-        <strong>API Error:</strong> {response.error}
+        {response.error}
       </div>
     );
   const initialData = response?.data || response;

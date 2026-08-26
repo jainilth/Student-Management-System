@@ -28,7 +28,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var years = await context.Set<AcademicYear>().Select(y => new AcademicYearResponseDto
+            var years = await context.AcademicYears.Select(y => new AcademicYearResponseDto
             {
                 AcademicYearId = y.AcademicYearId,
                 Year = y.Year
@@ -46,7 +46,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var year = await context.Set<AcademicYear>().FindAsync(id);
+            var year = await context.AcademicYears.FindAsync(id);
             if (year is null)
                 return NotFound(new CommonApiResponse<AcademicYearResponseDto>
                 {
@@ -77,7 +77,7 @@ namespace StudentManagmentSystem.Controllers
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
-            var duplicate = await context.Set<AcademicYear>().FirstOrDefaultAsync(y => y.Year == dto.Year);
+            var duplicate = await context.AcademicYears.FirstOrDefaultAsync(y => y.Year == dto.Year);
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<AcademicYearResponseDto>
                 {
@@ -87,7 +87,7 @@ namespace StudentManagmentSystem.Controllers
                 });
 
             var entity = new AcademicYear { Year = dto.Year };
-            context.Set<AcademicYear>().Add(entity);
+            context.AcademicYears.Add(entity);
             await context.SaveChangesAsync();
 
             return StatusCode(201, new CommonApiResponse<AcademicYearResponseDto>
@@ -112,7 +112,7 @@ namespace StudentManagmentSystem.Controllers
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
-            var existing = await context.Set<AcademicYear>().FindAsync(id);
+            var existing = await context.AcademicYears.FindAsync(id);
             if (existing is null)
                 return NotFound(new CommonApiResponse<AcademicYearResponseDto>
                 {
@@ -121,7 +121,7 @@ namespace StudentManagmentSystem.Controllers
                     Message = "Academic year not found"
                 });
 
-            var duplicate = await context.Set<AcademicYear>().FirstOrDefaultAsync(y => y.Year == dto.Year && y.AcademicYearId != id);
+            var duplicate = await context.AcademicYears.FirstOrDefaultAsync(y => y.Year == dto.Year && y.AcademicYearId != id);
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<AcademicYearResponseDto>
                 {
@@ -145,7 +145,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
-            var entity = await context.Set<AcademicYear>().FindAsync(id);
+            var entity = await context.AcademicYears.FindAsync(id);
             if (entity is null)
                 return NotFound(new CommonApiResponse<AcademicYearResponseDto>
                 {
@@ -154,7 +154,7 @@ namespace StudentManagmentSystem.Controllers
                     Message = "Academic year not found"
                 });
 
-            context.Set<AcademicYear>().Remove(entity);
+            context.AcademicYears.Remove(entity);
             await context.SaveChangesAsync();
 
             return Ok(new CommonApiResponse<AcademicYearResponseDto>

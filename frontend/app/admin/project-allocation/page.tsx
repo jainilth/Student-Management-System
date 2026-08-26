@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AdminDeleteForm from "@/components/AdminDeleteForm";
 import { revalidatePath } from "next/cache";
 import {
   GetAllProjectAllocations,
@@ -13,7 +14,7 @@ export default async function ProjectAllocationListPage() {
   if (response?.error)
     return (
       <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-red-700">
-        <strong>API Error:</strong> {response.error}
+        {response.error}
       </div>
     );
   const records = Array.isArray(data) ? data : [];
@@ -107,7 +108,7 @@ export default async function ProjectAllocationListPage() {
                         >
                           Edit
                         </Link>
-                        <form action={removeRecord}>
+                        <AdminDeleteForm action={removeRecord}>
                           <input
                             type="hidden"
                             name="allocationId"
@@ -119,7 +120,7 @@ export default async function ProjectAllocationListPage() {
                           >
                             Delete
                           </button>
-                        </form>
+                        </AdminDeleteForm>
                       </div>
                     </td>
                   </tr>

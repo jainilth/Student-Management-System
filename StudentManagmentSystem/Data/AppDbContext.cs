@@ -13,9 +13,12 @@ namespace StudentManagmentSystem.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<AcademicProgram> Programs { get; set; }
+        public DbSet<AcademicYear> AcademicYears { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Grade> Grades { get; set; }
         public DbSet<SemesterSubject> SemesterSubjects { get; set; }
+        public DbSet<ClassSession> ClassSessions { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentSemester> StudentSemesters { get; set; }
         public DbSet<SemesterResult> SemesterResults { get; set; }
@@ -31,6 +34,10 @@ namespace StudentManagmentSystem.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<AcademicYear>().ToTable("AcademicYear");
+            modelBuilder.Entity<Grade>().ToTable("Grade");
+            modelBuilder.Entity<ClassSession>().ToTable("ClassSession");
 
             modelBuilder.Entity<Role>(entity =>
             {

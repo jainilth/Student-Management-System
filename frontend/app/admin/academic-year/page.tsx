@@ -1,11 +1,15 @@
 import Link from "next/link";
+import AdminDeleteForm from "@/components/AdminDeleteForm";
 import { revalidatePath } from "next/cache";
 import {
   GetAllAcademicYears,
   DeleteAcademicYear,
 } from "@/service/academicYear.service";
 
-type RecordData = Record<string, any>;
+type RecordData = {
+  academicYearId: number;
+  year?: string | number | null;
+};
 
 export default async function AcademicYearListPage() {
   const response = await GetAllAcademicYears();
@@ -13,7 +17,7 @@ export default async function AcademicYearListPage() {
   if (response?.error)
     return (
       <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-red-700">
-        <strong>API Error:</strong> {response.error}
+        {response.error}
       </div>
     );
   const records = Array.isArray(data) ? data : [];
@@ -90,7 +94,7 @@ export default async function AcademicYearListPage() {
                         >
                           Edit
                         </Link>
-                        <form action={removeRecord}>
+                        <AdminDeleteForm action={removeRecord}>
                           <input
                             type="hidden"
                             name="academicYearId"
@@ -102,7 +106,7 @@ export default async function AcademicYearListPage() {
                           >
                             Delete
                           </button>
-                        </form>
+                        </AdminDeleteForm>
                       </div>
                     </td>
                   </tr>

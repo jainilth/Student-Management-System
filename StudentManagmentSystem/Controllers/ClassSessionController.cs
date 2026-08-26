@@ -42,10 +42,11 @@ namespace StudentManagmentSystem.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var items = await context.Set<ClassSession>()
+            var sessions = await context.ClassSessions
                 .Include(cs => cs.SemesterSubject).ThenInclude(ss => ss.Subject)
                 .Include(cs => cs.Faculty).ThenInclude(f => f.User)
-                .Select(cs => MapToDto(cs)).ToListAsync();
+                .ToListAsync();
+            var items = sessions.Select(MapToDto).ToList();
 
             return Ok(new CommonApiResponse<List<ClassSessionResponseDto>>
             {
@@ -59,7 +60,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var cs = await context.Set<ClassSession>()
+            var cs = await context.ClassSessions
                 .Include(cs => cs.SemesterSubject).ThenInclude(ss => ss.Subject)
                 .Include(cs => cs.Faculty).ThenInclude(f => f.User)
                 .FirstOrDefaultAsync(cs => cs.SessionId == id);
@@ -105,7 +106,7 @@ namespace StudentManagmentSystem.Controllers
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
-            context.Set<ClassSession>().Add(entity);
+            context.ClassSessions.Add(entity);
             await context.SaveChangesAsync();
 
             await context.Entry(entity).Reference(cs => cs.SemesterSubject).LoadAsync();
@@ -137,7 +138,7 @@ namespace StudentManagmentSystem.Controllers
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
-            var existing = await context.Set<ClassSession>().FindAsync(id);
+            var existing = await context.ClassSessions.FindAsync(id);
             if (existing is null)
                 return NotFound(new CommonApiResponse<ClassSessionResponseDto>
                 {
@@ -174,7 +175,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
-            var entity = await context.Set<ClassSession>()
+            var entity = await context.ClassSessions
                 .Include(cs => cs.SemesterSubject).ThenInclude(ss => ss.Subject)
                 .Include(cs => cs.Faculty).ThenInclude(f => f.User)
                 .FirstOrDefaultAsync(cs => cs.SessionId == id);
@@ -187,7 +188,7 @@ namespace StudentManagmentSystem.Controllers
                     Message = "Class session not found"
                 });
 
-            context.Set<ClassSession>().Remove(entity);
+            context.ClassSessions.Remove(entity);
             await context.SaveChangesAsync();
 
             return Ok(new CommonApiResponse<ClassSessionResponseDto>

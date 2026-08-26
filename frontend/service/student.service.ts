@@ -1,7 +1,7 @@
 'use server'
 
 
-import { getApiErrorMessage } from "@/lib/api-error";
+import { getApiErrorMessageFromResponse } from "@/lib/api-error";
 import { getSession } from '@/lib/auth'
 
 const API_URL = process.env.API_URL || 'http://localhost:5245/api'
@@ -18,7 +18,7 @@ export async function GetAllStudents() {
             },
             cache: 'no-store'
         })
-        if (!res.ok) return { error: 'Failed to fetch students' }
+        if (!res.ok) return { error: await getApiErrorMessageFromResponse(res, 'Failed to fetch students') }
         return await res.json()
     } catch (e) {
         return { error: 'Network error occurred' }
@@ -37,7 +37,7 @@ export async function GetStudentById(id: number) {
             },
             cache: 'no-store'
         })
-        if (!res.ok) return { error: 'Failed to fetch' }
+        if (!res.ok) return { error: await getApiErrorMessageFromResponse(res, 'Failed to fetch') }
         return await res.json()
     } catch (e) {
         return { error: 'Network error occurred' }
@@ -58,8 +58,7 @@ export async function CreateStudent(data: any) {
             body: JSON.stringify(data)
         })
         if (!res.ok) {
-            const errorData = await res.json().catch(() => ({}))
-            return { error: getApiErrorMessage(errorData, "Failed to create") }
+            return { error: await getApiErrorMessageFromResponse(res, "Failed to create") }
         }
         return await res.json()
     } catch (e) {
@@ -81,8 +80,7 @@ export async function UpdateStudent(id: number, data: any) {
             body: JSON.stringify(data)
         })
         if (!res.ok) {
-            const errorData = await res.json().catch(() => ({}))
-            return { error: getApiErrorMessage(errorData, "Failed to update") }
+            return { error: await getApiErrorMessageFromResponse(res, "Failed to update") }
         }
         return await res.json()
     } catch (e) {
@@ -102,7 +100,7 @@ export async function DeleteStudent(id: number) {
                 'Content-Type': 'application/json'
             }
         })
-        if (!res.ok) return { error: 'Failed to delete' }
+        if (!res.ok) return { error: await getApiErrorMessageFromResponse(res, 'Failed to delete') }
         return await res.json()
     } catch (e) {
         return { error: 'Network error occurred' }

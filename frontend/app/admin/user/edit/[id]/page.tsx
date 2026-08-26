@@ -20,7 +20,7 @@ export default async function EditUserPage({ params }: Props) {
     if (userResponse?.error) {
         return (
             <div className="rounded-lg border border-red-200 bg-red-50 p-8 text-red-700">
-                <strong>API Error:</strong> {userResponse.error}
+                {userResponse.error}
             </div>
         );
     }
@@ -44,7 +44,7 @@ export default async function EditUserPage({ params }: Props) {
             revalidatePath("/admin/user");
             redirect("/admin/user");
         }
-    return { error: response?.error || "The request could not be completed." };
+        return { error: response?.error || "The request could not be completed." };
     }
 
     return (

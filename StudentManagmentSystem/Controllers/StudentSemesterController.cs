@@ -97,15 +97,86 @@ namespace StudentManagmentSystem.Controllers
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
-            var duplicate = await context.StudentSemesters.FirstOrDefaultAsync(ss =>
-                ss.StudentId == dto.StudentId && ss.SemesterId == dto.SemesterId && ss.AcademicYearId == dto.AcademicYearId);
+            var academicYear = await context.AcademicYears
+                .FirstOrDefaultAsync(ay => ay.AcademicYearId == dto.AcademicYearId);
+
+            var student = await context.Students
+                .Include(s => s.AcademicProgram)
+                .FirstOrDefaultAsync(s => s.StudentId == dto.StudentId);
+
+            if (academicYear == null)
+            {
+                return BadRequest(new CommonApiResponse<StudentSemesterResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Academic year not found."
+                });
+            }
+
+
+            var parts = academicYear.Year.Split("-");
+            if (parts.Length != 2 ||
+            !int.TryParse(parts[0], out int startYear))
+            {
+                return BadRequest(new CommonApiResponse<StudentSemesterResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Invalid academic year format."
+                });
+            }
+
+            int endYear = startYear + 1;
+
+            DateTime startDate = new DateTime(startYear, 6, 1);
+            DateTime endDate = new DateTime(endYear, 5, 31);
+
+            var maxEligibleYear = student.AdmissionYear + student.AcademicProgram.DurationYears;
+            if (student.AdmissionYear > startYear || maxEligibleYear < endYear)
+            {
+                return BadRequest(new CommonApiResponse<StudentSemesterResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"Enrollment year must be between " +
+                              $"{student.AdmissionYear} and " +
+                              $"{maxEligibleYear}."
+                });
+            }
+
+            // 4. Validate enrollment date
+            if (dto.EnrollmentDate < startDate ||
+                dto.EnrollmentDate > endDate)
+            {
+                return BadRequest(new CommonApiResponse<StudentSemesterResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"Enrollment date must be between " +
+                              $"{startDate:dd-MM-yyyy} and " +
+                              $"{endDate:dd-MM-yyyy}."
+                });
+            }
+
+            
+
+            var duplicate = await context.StudentSemesters
+            .FirstOrDefaultAsync(ss =>
+            ss.StudentId == dto.StudentId &&
+            ss.SemesterId == dto.SemesterId &&
+            ss.AcademicYearId == dto.AcademicYearId);
+
             if (duplicate != null)
+            {
                 return BadRequest(new CommonApiResponse<StudentSemesterResponseDto>
                 {
                     Success = false,
                     StatusCode = 400,
                     Message = "Student is already enrolled in this semester for the given academic year."
                 });
+            }
+
 
             var entity = new StudentSemester
             {
@@ -118,6 +189,8 @@ namespace StudentManagmentSystem.Controllers
                 UpdatedAt = DateTime.UtcNow
             };
             context.StudentSemesters.Add(entity);
+            student.CurrentSemesterId = dto.SemesterId;
+            student.UpdatedAt = DateTime.UtcNow;
             await context.SaveChangesAsync();
 
             await context.Entry(entity).Reference(ss => ss.Student).LoadAsync();

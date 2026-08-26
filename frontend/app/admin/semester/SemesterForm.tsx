@@ -31,8 +31,7 @@ export default function SemesterForm({
           {editing ? "Edit Semesters" : "Add Semesters"}
         </h1>
       </header>
-      <AdminForm
-        action={onSubmitAction}
+              preserveValuesOnError={!editing}
         className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
       >
         <div className="grid gap-5 sm:grid-cols-2">

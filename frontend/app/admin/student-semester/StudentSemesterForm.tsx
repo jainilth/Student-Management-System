@@ -7,6 +7,15 @@ type StudentSemesterFormProps = {
   onSubmitAction: (formData: FormData) => Promise<void | { error?: string }>;
   mode: "create" | "edit";
 };
+
+const semesterStatusOptions = [
+  "Active",
+  "Completed",
+  "Failed",
+  "Dropped",
+  "Withdrawn",
+] as const;
+
 const inputClass =
   "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100";
 
@@ -37,6 +46,7 @@ export default async function StudentSemesterForm({
       </header>
       <AdminForm
         action={onSubmitAction}
+        preserveValuesOnError={!editing}
         className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
       >
         <div className="grid gap-5 sm:grid-cols-2">
@@ -106,12 +116,18 @@ export default async function StudentSemesterForm({
           </label>
           <label className="text-sm font-medium text-slate-700">
             Status
-            <input
+            <select
               className={inputClass}
               name="status"
-              type="text"
-              defaultValue={initialData.status ?? ""}
-            />
+              required
+              defaultValue={initialData.status ?? "Active"}
+            >
+              {semesterStatusOptions.map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         <div className="flex justify-end gap-3">

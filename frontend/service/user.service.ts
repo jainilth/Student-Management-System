@@ -1,7 +1,7 @@
 'use server'
 
 
-import { getApiErrorMessage } from "@/lib/api-error";
+import { getApiErrorMessageFromResponse } from "@/lib/api-error";
 import { getSession } from '@/lib/auth'
 
 const API_URL = process.env.API_URL || 'http://localhost:5245/api'
@@ -20,7 +20,7 @@ export async function GetAllUsers() {
             cache: 'no-store'
         })
         if (!res.ok) {
-            return { error: 'Failed to fetch users' }
+            return { error: await getApiErrorMessageFromResponse(res, 'Failed to fetch users') }
         }
 
         return await res.json()
@@ -45,7 +45,7 @@ export async function GetUserById(id: number) {
             cache: 'no-store'
         })
         if (!res.ok) {
-            return { error: 'Failed to fetch user' }
+            return { error: await getApiErrorMessageFromResponse(res, 'Failed to fetch user') }
         }
 
         return await res.json()
@@ -72,8 +72,7 @@ export async function CreateUser(data: any) {
         })
 
         if (!res.ok) {
-            const errorData = await res.json().catch(() => ({}))
-            return { error: getApiErrorMessage(errorData, "Failed to create user") }
+            return { error: await getApiErrorMessageFromResponse(res, "Failed to create user") }
         }
 
         return await res.json()
@@ -100,8 +99,7 @@ export async function UpdateUser(id: number, data: any) {
         })
 
         if (!res.ok) {
-            const errorData = await res.json().catch(() => ({}))
-            return { error: getApiErrorMessage(errorData, "Failed to update user") }
+            return { error: await getApiErrorMessageFromResponse(res, "Failed to update user") }
         }
 
         return await res.json()
@@ -127,7 +125,7 @@ export async function DeleteUser(id: number) {
         })
 
         if (!res.ok) {
-            return { error: 'Failed to delete user' }
+            return { error: await getApiErrorMessageFromResponse(res, 'Failed to delete user') }
         }
 
         return await res.json()

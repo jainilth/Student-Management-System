@@ -2,7 +2,9 @@ import AdminForm from "@/components/AdminForm";
 import Link from "next/link";
 
 type AcademicYearFormProps = {
-  initialData?: Record<string, any>;
+  initialData?: {
+    year?: string | number | null;
+  };
   onSubmitAction: (formData: FormData) => Promise<void | { error?: string }>;
   mode: "create" | "edit";
 };
@@ -31,8 +33,7 @@ export default function AcademicYearForm({
           {editing ? "Edit Academic Years" : "Add Academic Years"}
         </h1>
       </header>
-      <AdminForm
-        action={onSubmitAction}
+              preserveValuesOnError={!editing}
         className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
       >
         <div className="grid gap-5 sm:grid-cols-2">

@@ -28,7 +28,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var grades = await context.Set<Grade>().Select(g => new GradeResponseDto
+            var grades = await context.Grades.Select(g => new GradeResponseDto
             {
                 GradeId = g.GradeId,
                 GradeCode = g.GradeCode,
@@ -50,7 +50,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var g = await context.Set<Grade>().FindAsync(id);
+            var g = await context.Grades.FindAsync(id);
             if (g is null)
                 return NotFound(new CommonApiResponse<GradeResponseDto>
                 {
@@ -89,7 +89,7 @@ namespace StudentManagmentSystem.Controllers
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
-            var duplicate = await context.Set<Grade>().FirstOrDefaultAsync(g => g.GradeCode == dto.GradeCode);
+            var duplicate = await context.Grades.FirstOrDefaultAsync(g => g.GradeCode == dto.GradeCode);
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<GradeResponseDto>
                 {
@@ -106,7 +106,7 @@ namespace StudentManagmentSystem.Controllers
                 MinMarks = dto.MinMarks,
                 MaxMarks = dto.MaxMarks
             };
-            context.Set<Grade>().Add(entity);
+            context.Grades.Add(entity);
             await context.SaveChangesAsync();
 
             return StatusCode(201, new CommonApiResponse<GradeResponseDto>
@@ -139,7 +139,7 @@ namespace StudentManagmentSystem.Controllers
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
-            var existing = await context.Set<Grade>().FindAsync(id);
+            var existing = await context.Grades.FindAsync(id);
             if (existing is null)
                 return NotFound(new CommonApiResponse<GradeResponseDto>
                 {
@@ -148,7 +148,7 @@ namespace StudentManagmentSystem.Controllers
                     Message = "Grade not found"
                 });
 
-            var duplicate = await context.Set<Grade>().FirstOrDefaultAsync(g =>
+            var duplicate = await context.Grades.FirstOrDefaultAsync(g =>
                 g.GradeId != id && g.GradeCode == dto.GradeCode);
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<GradeResponseDto>
@@ -185,7 +185,7 @@ namespace StudentManagmentSystem.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
-            var entity = await context.Set<Grade>().FindAsync(id);
+            var entity = await context.Grades.FindAsync(id);
             if (entity is null)
                 return NotFound(new CommonApiResponse<GradeResponseDto>
                 {
@@ -194,7 +194,7 @@ namespace StudentManagmentSystem.Controllers
                     Message = "Grade not found"
                 });
 
-            context.Set<Grade>().Remove(entity);
+            context.Grades.Remove(entity);
             await context.SaveChangesAsync();
 
             return Ok(new CommonApiResponse<GradeResponseDto>

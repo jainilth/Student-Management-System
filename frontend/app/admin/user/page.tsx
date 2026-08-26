@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AdminDeleteForm from "@/components/AdminDeleteForm";
 import { revalidatePath } from "next/cache";
 import { DeleteUser, GetAllUsers } from "@/service/user.service";
 
@@ -26,11 +27,7 @@ export default async function UserListPage() {
   if (response?.error) {
     return (
       <div className="p-8 bg-red-50 border border-red-200 rounded-lg text-red-700">
-        <strong>API Error:</strong> {response.error}
-        <br />
-        <small className="text-red-500">
-          Check that the backend is running on the correct port.
-        </small>
+        {response.error}
       </div>
     );
   }
@@ -133,7 +130,7 @@ export default async function UserListPage() {
                         >
                           Edit
                         </Link>
-                        <form action={removeUser}>
+                        <AdminDeleteForm action={removeUser}>
                           <input
                             type="hidden"
                             name="userId"
@@ -145,7 +142,7 @@ export default async function UserListPage() {
                           >
                             Delete
                           </button>
-                        </form>
+                        </AdminDeleteForm>
                       </div>
                     </td>
                   </tr>
