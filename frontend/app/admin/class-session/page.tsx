@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AdminDeleteForm from "@/components/AdminDeleteForm";
 import { revalidatePath } from "next/cache";
+import TableToolbar from "@/components/TableToolbar";
 import {
   GetAllClassSessions,
   DeleteClassSession,
@@ -27,7 +28,7 @@ export default async function ClassSessionListPage() {
     <section className="space-y-7">
       <header className="flex flex-col gap-4 border-b border-slate-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-950">
             Administration
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">
@@ -39,12 +40,13 @@ export default async function ClassSessionListPage() {
         </div>
         <Link
           href="/admin/class-session/create"
-          className="inline-flex w-fit rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700"
+          className="inline-flex w-fit rounded-lg bg-emerald-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-900"
         >
           + Add record
         </Link>
       </header>
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <TableToolbar />
         <div className="border-b border-slate-100 px-5 py-4">
           <h2 className="font-semibold text-slate-900">
             Class Sessions directory
@@ -73,7 +75,7 @@ export default async function ClassSessionListPage() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {records.map((record: RecordData) => (
-                  <tr key={record.sessionId} className="hover:bg-indigo-50/30">
+                  <tr key={record.sessionId} className="hover:bg-emerald-50/30">
                     <td className="px-5 py-4 font-medium text-slate-900">
                       {record.sessionId}
                     </td>
@@ -96,7 +98,7 @@ export default async function ClassSessionListPage() {
                       <div className="flex justify-end gap-3">
                         <Link
                           href={"/admin/class-session/edit/" + record.sessionId}
-                          className="font-semibold text-indigo-600 hover:text-indigo-800"
+                          className="font-semibold text-emerald-950 hover:text-emerald-900"
                         >
                           Edit
                         </Link>

@@ -34,5 +34,7 @@ namespace StudentManagmentSystem.Models
 
         public ICollection<AttendanceRecord> AttendanceRecords { get; set; }
             = new List<AttendanceRecord>();
+
+        public ICollection<SubjectResult> SubjectResults { get; set; } = new List<SubjectResult>();
     }
 }

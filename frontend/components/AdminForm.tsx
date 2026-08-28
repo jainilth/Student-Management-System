@@ -21,7 +21,6 @@ export default function AdminForm({ action, className, children, preserveValuesO
         async (_previousState: FormState, formData: FormData) => action(formData),
         undefined,
     );
-
     useEffect(() => {
         if (!preserveValuesOnError || !state?.error || !formRef.current || !submittedValuesRef.current) {
             if (!preserveValuesOnError || !state?.error || !formRef.current) {
@@ -46,7 +45,6 @@ export default function AdminForm({ action, className, children, preserveValuesO
                 return;
             }
         }
-
         const form = formRef.current;
         for (const [name, rawValue] of submittedValuesRef.current.entries()) {
             const value = String(rawValue);
@@ -73,7 +71,6 @@ export default function AdminForm({ action, className, children, preserveValuesO
                 }
             }
         }
-
         try {
             sessionStorage.removeItem(storageKey);
         } catch {

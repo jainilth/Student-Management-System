@@ -1,26 +1,137 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #f3f6f4;
+    --foreground: #101915;
+    --surface: #ffffff;
+    --muted: #718079;
+    --line: #e3eae6;
+    --sidebar: #062b1d;
+    --brand: #b7f000;
+    --brand-dark: #075135;
+    --danger: #d85b63;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-surface: var(--surface);
+    --color-muted: var(--muted);
+    --color-line: var(--line);
+    --color-sidebar: var(--sidebar);
+    --color-brand: var(--brand);
+    --color-brand-dark: var(--brand-dark);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+    border-color: var(--line);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans), sans-serif;
+}
+
+::selection {
+    background: #dff7a0;
+    color: #062b1d;
+}
+
+input,
+select,
+textarea {
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--brand-dark);
+    box-shadow: 0 0 0 3px rgb(7 81 53 / 10%);
+}
+
+.admin-shell main section>header {
+    border-color: var(--line);
+}
+
+.admin-shell main section>header h1 {
+    color: var(--foreground);
+    font-size: 2.25rem;
+}
+
+.admin-shell .rounded-xl.border.border-slate-200.bg-white,
+.admin-shell .rounded-lg.border.border-slate-200.bg-white {
+    border-color: var(--line);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 24px rgb(6 43 29 / 5%);
+}
+
+.admin-shell .bg-indigo-600 {
+    background-color: var(--brand-dark);
+}
+
+.admin-shell .hover\:bg-indigo-700:hover {
+    background-color: var(--sidebar);
+}
+
+.admin-shell .text-indigo-600 {
+    color: var(--brand-dark);
+}
+
+.admin-shell .hover\:text-indigo-800:hover {
+    color: var(--sidebar);
+}
+
+.admin-shell .hover\:bg-indigo-50\/30:hover {
+    background-color: rgb(183 240 0 / 8%);
+}
+
+.admin-shell .text-rose-600 {
+    color: var(--danger);
+}
+
+.admin-shell .hover\:text-rose-800:hover {
+    color: #a33f4b;
+}
+
+.admin-shell .border-red-200 {
+    border-color: #f2c4c8;
+}
+
+.admin-shell .bg-red-50 {
+    background-color: #fff5f5;
+}
+
+.admin-shell .text-red-700 {
+    color: #a33f4b;
+}
+
+.admin-shell table thead {
+    background-color: var(--background);
+}
+
+.admin-shell table tbody tr:hover {
+    background-color: rgb(183 240 0 / 8%);
+}
+
+.admin-shell table th {
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+}
+
+.admin-shell table td {
+    border-color: var(--line);
+}
+
+.admin-shell input:not([type="checkbox"]),
+.admin-shell select,
+.admin-shell textarea {
+    min-height: 2.75rem;
 }

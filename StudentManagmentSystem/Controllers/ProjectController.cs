@@ -94,6 +94,16 @@ namespace StudentManagmentSystem.Controllers
                     Errors = validation.Errors.Select(e => e.ErrorMessage).ToList()
                 });
 
+            if (dto.EndDate < dto.StartDate)
+            {
+                return BadRequest(new CommonApiResponse<ProjectResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = $"{dto.EndDate} End date must be grater then current date"
+                });
+            }
+
             var entity = new Project
             {
                 Title = dto.Title,

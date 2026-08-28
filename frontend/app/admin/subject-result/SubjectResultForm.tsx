@@ -1,14 +1,17 @@
 import AdminForm from "@/components/AdminForm";
 import Link from "next/link";
-import { getAdminOptions } from "@/lib/admin-options";
+import { GetAllGrades } from "@/service/grade.service";
+import { GetAllStudentSemesters } from "@/service/studentSemester.service";
+import { GetAllSemesterSubjects } from "@/service/semesterSubject.service";
 
 type SubjectResultFormProps = {
   initialData?: Record<string, any>;
   onSubmitAction: (formData: FormData) => Promise<void | { error?: string }>;
   mode: "create" | "edit";
 };
+type SelectOption = { value: number; label: string };
 const inputClass =
-  "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100";
+  "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100";
 
 export default async function SubjectResultForm({
   initialData = {},
@@ -16,41 +19,59 @@ export default async function SubjectResultForm({
   mode,
 }: SubjectResultFormProps) {
   const editing = mode === "edit";
-  const semesterResultIdOptions = await getAdminOptions("SemesterResult");
-  const semesterSubjectIdOptions = await getAdminOptions("SemesterSubject");
-  const gradeIdOptions = await getAdminOptions("Grade");
+  const studentSemesters = await GetAllStudentSemesters();
+  const semesterSubjects = await GetAllSemesterSubjects();
+  const grades = await GetAllGrades();
+  const studentSemesterIdOptions: SelectOption[] = (studentSemesters?.data ?? []).map((record: any) => ({
+    value: Number(record.studentSemesterId),
+    label:[record.studentName,record.academicProgramName, record.semesterName]
+      .filter(Boolean)
+      .join(" - ") || `Record ${record.studentSemesterId}`,
+  }));
+  const semesterSubjectIdOptions: SelectOption[] = (semesterSubjects?.data ?? []).map((record: any) => ({
+    value: Number(record.semesterSubjectId),
+    label: [record.subjectName, record.programName, record.semesterName]
+      .filter(Boolean)
+      .join(" - ") || `Record ${record.semesterSubjectId}`,
+  }));
+  const gradeIdOptions: SelectOption[] = (grades?.data ?? []).map((record: any) => ({
+    value: Number(record.gradeId),
+    label: record.gradeCode || record.gradeName || `Record ${record.gradeId}`,
+  }));
   return (
     <section className="mx-auto max-w-4xl space-y-7">
       <header className="border-b border-slate-200 pb-6">
         <Link
           href="/admin/subject-result"
-          className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+          className="text-sm font-semibold text-emerald-950 hover:text-emerald-900"
         >
           &lt;- Back to subject results
         </Link>
-        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">
+        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-950">
           {editing ? "Edit record" : "New record"}
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">
           {editing ? "Edit Subject Results" : "Add Subject Results"}
         </h1>
       </header>
-              preserveValuesOnError={!editing}
+      <AdminForm
+        action={onSubmitAction}
+        preserveValuesOnError={!editing}
         className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
       >
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="text-sm font-medium text-slate-700">
-            Semester result
+            Student semester
             <select
               className={inputClass}
-              name="semesterResultId"
+              name="studentSemesterId"
               required
-              defaultValue={initialData.semesterResultId ?? ""}
+              defaultValue={initialData.studentSemesterId ?? ""}
             >
               <option value="" disabled>
-                Select semester result
+                Select student semester
               </option>
-              {semesterResultIdOptions.map((option) => (
+              {studentSemesterIdOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -161,7 +182,7 @@ export default async function SubjectResultForm({
             Cancel
           </Link>
           <button
-            className="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700"
+            className="rounded-lg bg-emerald-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-900"
             type="submit"
           >
             {editing ? "Save changes" : "Create record"}

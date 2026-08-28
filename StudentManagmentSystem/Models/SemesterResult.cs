@@ -29,6 +29,5 @@ namespace StudentManagmentSystem.Models
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         public StudentSemester StudentSemester { get; set; } = null!;
-        public ICollection<SubjectResult> SubjectResults { get; set; } = new List<SubjectResult>();
     }
 }

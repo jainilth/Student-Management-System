@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentManagmentSystem.Models
 {
-    [Index(nameof(SemesterResultId), nameof(SemesterSubjectId), IsUnique = true)]
-    [Index(nameof(SemesterResultId))]
+    [Index(nameof(StudentSemesterId), nameof(SemesterSubjectId), IsUnique = true)]
+    [Index(nameof(StudentSemesterId))]
     [Index(nameof(SemesterSubjectId))]
     public class SubjectResult
     {
         [Key]
         public int SubjectResultId { get; set; }
-        [ForeignKey(nameof(SemesterResult))]
-        public int SemesterResultId { get; set; }
+        [ForeignKey(nameof(StudentSemester))]
+        public int StudentSemesterId { get; set; }
         [ForeignKey(nameof(SemesterSubject))]
         public int SemesterSubjectId { get; set; }
 
@@ -40,7 +40,7 @@ namespace StudentManagmentSystem.Models
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         public Grade Grade { get; set; } = null!;
-        public SemesterResult SemesterResult { get; set; } = null!;
+        public StudentSemester StudentSemester { get; set; } = null!;
         public SemesterSubject SemesterSubject { get; set; } = null!;
     }
 }

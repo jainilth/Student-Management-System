@@ -5,7 +5,7 @@ namespace StudentManagmentSystem.Dto
     public class CreateSubjectResultDto
     {
         [Required]
-        public int SemesterResultId { get; set; }
+        public int StudentSemesterId { get; set; }
 
         [Required]
         public int SemesterSubjectId { get; set; }
@@ -35,7 +35,7 @@ namespace StudentManagmentSystem.Dto
     public class UpdateSubjectResultDto
     {
         [Required]
-        public int SemesterResultId { get; set; }
+        public int StudentSemesterId { get; set; }
 
         [Required]
         public int SemesterSubjectId { get; set; }
@@ -65,7 +65,7 @@ namespace StudentManagmentSystem.Dto
     public class SubjectResultResponseDto
     {
         public int SubjectResultId { get; set; }
-        public int SemesterResultId { get; set; }
+        public int StudentSemesterId { get; set; }
         public string StudentEnrollmentNumber { get; set; } = string.Empty;
         public string StudentName { get; set; } = string.Empty;
         public int SemesterSubjectId { get; set; }

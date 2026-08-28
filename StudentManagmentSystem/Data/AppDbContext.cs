@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StudentManagmentSystem.Models;
 
 namespace StudentManagmentSystem.Data
@@ -160,6 +160,11 @@ namespace StudentManagmentSystem.Data
                     .WithOne(sr => sr.StudentSemester)
                     .HasForeignKey<SemesterResult>(sr => sr.StudentSemesterId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasMany(ss => ss.SubjectResults)
+                    .WithOne(sr => sr.StudentSemester)
+                    .HasForeignKey(sr => sr.StudentSemesterId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<SemesterResult>(entity =>
@@ -174,10 +179,6 @@ namespace StudentManagmentSystem.Data
                         "CK_SemesterResult_Credits",
                         "[EarnedCredits] >= 0 AND [EarnedCredits] <= [TotalCredits]");
                 });
-                entity.HasMany(sr => sr.SubjectResults)
-                    .WithOne(su => su.SemesterResult)
-                    .HasForeignKey(su => su.SemesterResultId)
-                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<SubjectResult>(entity =>

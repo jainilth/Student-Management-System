@@ -9,7 +9,7 @@ type UserFormProps = {
   mode: "create" | "edit";
 };
 const inputClass =
-  "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100";
+  "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100";
 
 export default function UserForm({
   initialData = {},
@@ -24,18 +24,20 @@ export default function UserForm({
       <header className="border-b border-slate-200 pb-6">
         <Link
           href="/admin/user"
-          className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+          className="text-sm font-semibold text-emerald-950 hover:text-emerald-900"
         >
           &lt;- Back to users
         </Link>
-        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">
+        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-950">
           {editing ? "Account settings" : "New account"}
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">
           {editing ? "Edit user" : "Add user"}
         </h1>
       </header>
-              preserveValuesOnError={!editing}
+      <AdminForm
+        action={onSubmitAction}
+        preserveValuesOnError={!editing}
         className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
       >
         <div className="grid gap-5 sm:grid-cols-2">
@@ -127,7 +129,7 @@ export default function UserForm({
               name="isActivate"
               value="true"
               defaultChecked={initialData.isActivate !== false}
-              className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+              className="h-4 w-4 rounded border-slate-300 text-emerald-950 focus:ring-emerald-500"
             />{" "}
             Account is active
           </label>
@@ -141,7 +143,7 @@ export default function UserForm({
           </Link>
           <button
             type="submit"
-            className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"
+            className="rounded-lg bg-emerald-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-emerald-900"
           >
             {editing ? "Save changes" : "Create account"}
           </button>

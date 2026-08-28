@@ -34,6 +34,7 @@ export default async function EditProjectAllocationPage({ params }: Props) {
     <ProjectAllocationForm
       initialData={initialData}
       mode="edit"
+      showEvaluationFields={true}
       onSubmitAction={handleSubmit}
     />
   );

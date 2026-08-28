@@ -44,6 +44,8 @@ namespace StudentManagmentSystem.Dto
         public int StudentId { get; set; }
         public string StudentEnrollmentNumber { get; set; } = string.Empty;
         public string StudentName { get; set; } = string.Empty;
+        public int AcademicProgramId { get; set; }
+        public string AcademicProgramName { get; set; } = string.Empty;
         public int SemesterId { get; set; }
         public string SemesterName { get; set; } = string.Empty;
         public int AcademicYearId { get; set; }

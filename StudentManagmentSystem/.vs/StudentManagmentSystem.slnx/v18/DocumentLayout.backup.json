@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Migrations\\20260828111304_changessubjectresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260828111304_changessubjectresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\models\\subjectresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:models\\subjectresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\controllers\\subjectresultcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:controllers\\subjectresultcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\controllers\\studentsemestercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:controllers\\studentsemestercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\controllers\\projectallocationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:controllers\\projectallocationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|solutionrelative:controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5F90B54A-07EB-039A-C775-864F77686231}|StudentManagmentSystem.csproj|d:\\jainil\\projects\\student-management-system\\studentmanagmentsystem\\middleware\\globalexceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -67,19 +91,95 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "20260828111304_changessubjectresult.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Migrations\\20260828111304_changessubjectresult.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260828111304_changessubjectresult.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Migrations\\20260828111304_changessubjectresult.cs",
+              "RelativeToolTip": "Migrations\\20260828111304_changessubjectresult.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T11:13:05.206Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T11:09:05.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SubjectResultController.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\SubjectResultController.cs",
+              "RelativeDocumentMoniker": "Controllers\\SubjectResultController.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\SubjectResultController.cs",
+              "RelativeToolTip": "Controllers\\SubjectResultController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAlwB0AAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T11:00:30.581Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SubjectResult.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\SubjectResult.cs",
+              "RelativeDocumentMoniker": "Models\\SubjectResult.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\SubjectResult.cs",
+              "RelativeToolTip": "Models\\SubjectResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T10:55:14.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProjectController.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\ProjectController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProjectController.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\ProjectController.cs",
+              "RelativeToolTip": "Controllers\\ProjectController.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAkwGYAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-27T03:38:09.824Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ProjectAllocationController.cs",
+              "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\ProjectAllocationController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProjectAllocationController.cs",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\ProjectAllocationController.cs",
+              "RelativeToolTip": "Controllers\\ProjectAllocationController.cs",
+              "ViewState": "AgIAAFoAAAAAAAAAAAA1wFUAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-27T03:31:18.844Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "StudentSemesterController.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\StudentSemesterController.cs",
               "RelativeDocumentMoniker": "Controllers\\StudentSemesterController.cs",
-              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\StudentSemesterController.cs*",
-              "RelativeToolTip": "Controllers\\StudentSemesterController.cs*",
-              "ViewState": "AgIAAIcAAAAAAAAAAAAowJEAAAANAAAAAAAAAA==",
+              "ToolTip": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\StudentSemesterController.cs",
+              "RelativeToolTip": "Controllers\\StudentSemesterController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH0AAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-26T15:01:33.312Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "StudentController.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\StudentController.cs",
               "RelativeDocumentMoniker": "Controllers\\StudentController.cs",
@@ -91,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
@@ -103,7 +203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "GlobalExceptionMiddleware.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Middleware\\GlobalExceptionMiddleware.cs",
               "RelativeDocumentMoniker": "Middleware\\GlobalExceptionMiddleware.cs",
@@ -111,12 +211,11 @@
               "RelativeToolTip": "Middleware\\GlobalExceptionMiddleware.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAApwBcAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-22T17:27:46.131Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-22T17:27:46.131Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "CreateUserValidator.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Validators\\User\\CreateUserValidator.cs",
               "RelativeDocumentMoniker": "Validators\\User\\CreateUserValidator.cs",
@@ -128,7 +227,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "20260819073317_AddedIndexIntoMobile.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Migrations\\20260819073317_AddedIndexIntoMobile.cs",
               "RelativeDocumentMoniker": "Migrations\\20260819073317_AddedIndexIntoMobile.cs",
@@ -136,12 +235,11 @@
               "RelativeToolTip": "Migrations\\20260819073317_AddedIndexIntoMobile.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-19T07:33:17.547Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-19T07:33:17.547Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "UserController.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
@@ -153,7 +251,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "UserDto.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Dto\\UserDto.cs",
               "RelativeDocumentMoniker": "Dto\\UserDto.cs",
@@ -165,7 +263,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "RoleDto.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Dto\\RoleDto.cs",
               "RelativeDocumentMoniker": "Dto\\RoleDto.cs",
@@ -177,7 +275,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "CommonApiResponse.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\CommonApiResponse.cs",
               "RelativeDocumentMoniker": "CommonApiResponse.cs",
@@ -189,7 +287,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "Role.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Models\\Role.cs",
               "RelativeDocumentMoniker": "Models\\Role.cs",
@@ -201,7 +299,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -213,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 15,
               "Title": "RoleController.cs",
               "DocumentMoniker": "D:\\jainil\\Projects\\Student-Management-System\\StudentManagmentSystem\\Controllers\\RoleController.cs",
               "RelativeDocumentMoniker": "Controllers\\RoleController.cs",

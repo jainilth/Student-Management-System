@@ -2,6 +2,7 @@ import Link from "next/link";
 import AdminDeleteForm from "@/components/AdminDeleteForm";
 import { revalidatePath } from "next/cache";
 import { DeleteUser, GetAllUsers } from "@/service/user.service";
+import TableToolbar from "@/components/TableToolbar";
 
 type UserRecord = {
   userId: number;
@@ -45,7 +46,7 @@ export default async function UserListPage() {
     <section className="space-y-7">
       <header className="flex flex-col gap-4 border-b border-slate-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-950">
             Directory
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">
@@ -57,20 +58,13 @@ export default async function UserListPage() {
         </div>
         <Link
           href="/admin/user/create"
-          className="inline-flex w-fit items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
+          className="inline-flex w-fit items-center gap-2 rounded-lg bg-emerald-950 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-900"
         >
           <span className="text-lg leading-none">+</span> Add user
         </Link>
       </header>
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
-          <div>
-            <h2 className="font-semibold text-slate-900">Account directory</h2>
-            <p className="mt-1 text-xs text-slate-500">
-              {users.length} {users.length === 1 ? "account" : "accounts"}
-            </p>
-          </div>
-        </div>
+        <TableToolbar />
         {users.length === 0 ? (
           <div className="px-5 py-16 text-center text-sm text-slate-500">
             No users found. Add the first account to get started.
@@ -92,7 +86,7 @@ export default async function UserListPage() {
                 {users.map((user: UserRecord) => (
                   <tr
                     key={user.userId}
-                    className="transition hover:bg-indigo-50/30"
+                    className="transition hover:bg-emerald-50/30"
                   >
                     <td className="px-5 py-4">
                       <div className="font-medium text-slate-900">
@@ -126,7 +120,7 @@ export default async function UserListPage() {
                       <div className="flex justify-end gap-3">
                         <Link
                           href={`/admin/user/edit/${user.userId}`}
-                          className="font-semibold text-indigo-600 hover:text-indigo-800"
+                          className="font-semibold text-emerald-950 hover:text-emerald-900"
                         >
                           Edit
                         </Link>

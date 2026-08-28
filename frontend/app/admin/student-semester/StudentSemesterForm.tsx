@@ -1,12 +1,15 @@
 import AdminForm from "@/components/AdminForm";
 import Link from "next/link";
-import { getAdminOptions } from "@/lib/admin-options";
+import { GetAllAcademicYears } from "@/service/academicYear.service";
+import { GetAllSemesters } from "@/service/semester.service";
+import { GetAllStudents } from "@/service/student.service";
 
 type StudentSemesterFormProps = {
   initialData?: Record<string, any>;
   onSubmitAction: (formData: FormData) => Promise<void | { error?: string }>;
   mode: "create" | "edit";
 };
+type SelectOption = { value: number; label: string };
 
 const semesterStatusOptions = [
   "Active",
@@ -17,7 +20,7 @@ const semesterStatusOptions = [
 ] as const;
 
 const inputClass =
-  "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100";
+  "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100";
 
 export default async function StudentSemesterForm({
   initialData = {},
@@ -25,19 +28,31 @@ export default async function StudentSemesterForm({
   mode,
 }: StudentSemesterFormProps) {
   const editing = mode === "edit";
-  const studentIdOptions = await getAdminOptions("Student");
-  const semesterIdOptions = await getAdminOptions("Semester");
-  const academicYearIdOptions = await getAdminOptions("AcademicYear");
+  const students = await GetAllStudents();
+  const semesters = await GetAllSemesters();
+  const academicYears = await GetAllAcademicYears();
+  const studentIdOptions: SelectOption[] = (students?.data ?? []).map((record: any) => ({
+    value: Number(record.studentId),
+    label: record.userName || record.enrollmentNumber || `Student ${record.studentId}`,
+  }));
+  const semesterIdOptions: SelectOption[] = (semesters?.data ?? []).map((record: any) => ({
+    value: Number(record.semesterId),
+    label: record.semesterName || `Record ${record.semesterId}`,
+  }));
+  const academicYearIdOptions: SelectOption[] = (academicYears?.data ?? []).map((record: any) => ({
+    value: Number(record.academicYearId),
+    label: record.year || `Record ${record.academicYearId}`,
+  }));
   return (
     <section className="mx-auto max-w-4xl space-y-7">
       <header className="border-b border-slate-200 pb-6">
         <Link
           href="/admin/student-semester"
-          className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+          className="text-sm font-semibold text-emerald-950 hover:text-emerald-900"
         >
           &lt;- Back to student semesters
         </Link>
-        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">
+        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-950">
           {editing ? "Edit record" : "New record"}
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">
@@ -138,7 +153,7 @@ export default async function StudentSemesterForm({
             Cancel
           </Link>
           <button
-            className="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700"
+            className="rounded-lg bg-emerald-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-900"
             type="submit"
           >
             {editing ? "Save changes" : "Create record"}

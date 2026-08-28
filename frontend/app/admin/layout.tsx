@@ -1,54 +1,14 @@
-import { getSession } from "@/lib/auth";
+import { getSession, logout } from "@/lib/auth";
 import { redirect } from "next/navigation";
-
 import Sidebar from "@/components/Sidebar";
 
-export default async function AdminLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const session = await getSession();
-  // if (!session || session.role !== 'Admin') {
-  //     redirect('/login')
-  // }
+export default async function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+    const session = await getSession();
+    async function handleLogout() {
+        "use server";
+        await logout();
+        redirect("/login");
+    }
 
-  return (
-    <div className="h-screen overflow-hidden bg-gray-50 flex flex-col">
-      <nav className="shrink-0 bg-indigo-600 shadow-md sticky top-0 z-50">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <span className="text-white font-extrabold text-2xl tracking-tight">
-                SMS Admin
-              </span>
-            </div>
-            <div className="flex items-center space-x-6">
-              <span className="text-indigo-100 font-medium">
-                {session.name}
-              </span>
-              <form
-                action={async () => {
-                  "use server";
-                  const { logout } = await import("@/lib/auth");
-                  await logout();
-                  redirect("/login");
-                }}
-              >
-                <button className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-1.5 rounded-full font-medium transition-colors text-sm">
-                  Sign Out
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div className="min-h-0 flex flex-1 overflow-hidden">
-        <Sidebar />
-        <main className="min-h-0 flex-1 w-full max-w-[1400px] mx-auto overflow-y-auto p-8">
-          {children}
-        </main>
-      </div>
-    </div>
-  );
+    return <div className="admin-shell flex h-screen overflow-hidden bg-background"><Sidebar /><div className="min-w-0 flex-1 overflow-y-auto"><nav className="sticky top-0 z-50 border-b bg-surface/95 shadow-sm backdrop-blur"><div className="flex h-[86px] items-center gap-4 px-5 sm:px-10"><button aria-label="Collapse menu" className="hidden h-10 w-10 items-center justify-center rounded-xl border bg-surface text-lg md:flex">|&lt;</button><button className="hidden rounded-full bg-sidebar px-5 py-3 text-sm font-bold text-white sm:block">+ &nbsp; Create</button><form className="mx-auto flex max-w-[500px] flex-1 items-center" action="/admin"><input aria-label="Search" placeholder="Search anything in Spark..." className="w-full rounded-full border-none bg-background px-5 py-3 text-sm shadow-inner" /></form><div className="hidden items-center gap-3 sm:flex"><button aria-label="Fullscreen" className="rounded-full border bg-surface px-4 py-2 text-lg hover:bg-background">⛶</button><button aria-label="Notifications" className="relative rounded-full border bg-surface px-4 py-2 text-lg hover:bg-background">♧<span className="absolute right-1 top-0 h-2 w-2 rounded-full bg-brand" /></button></div><div className="flex h-10 w-10 items-center justify-center rounded-full bg-sidebar text-sm font-bold text-brand">A</div><div className="hidden lg:block"><p className="text-sm font-semibold">{session.name}</p><p className="text-xs text-muted">Administrator⌄</p></div><form action={handleLogout}><button type="submit" className="rounded-full border border-sidebar px-4 py-2 text-sm font-semibold text-sidebar hover:bg-sidebar hover:text-white">Logout</button></form></div></nav><main className="mx-auto max-w-[1500px] p-5 sm:p-10">{children}</main></div></div>;
 }

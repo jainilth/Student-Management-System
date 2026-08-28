@@ -30,6 +30,8 @@ namespace StudentManagmentSystem.Controllers
             StudentId = ss.StudentId,
             StudentEnrollmentNumber = ss.Student?.EnrollmentNumber ?? string.Empty,
             StudentName = ss.Student?.User?.UserName ?? string.Empty,
+            AcademicProgramId = ss.Student?.ProgramId ?? 0,
+            AcademicProgramName = ss.Student?.AcademicProgram?.ProgramName ?? string.Empty,
             SemesterId = ss.SemesterId,
             SemesterName = ss.Semester?.SemesterName ?? string.Empty,
             AcademicYearId = ss.AcademicYearId,
@@ -45,6 +47,7 @@ namespace StudentManagmentSystem.Controllers
         {
             var items = await context.StudentSemesters
                 .Include(ss => ss.Student).ThenInclude(s => s.User)
+                .Include(ss => ss.Student).ThenInclude(s => s!.AcademicProgram)
                 .Include(ss => ss.Semester)
                 .Include(ss => ss.AcademicYear)
                 .Select(ss => MapToDto(ss)).ToListAsync();
@@ -63,6 +66,7 @@ namespace StudentManagmentSystem.Controllers
         {
             var ss = await context.StudentSemesters
                 .Include(ss => ss.Student).ThenInclude(s => s.User)
+                .Include(ss => ss.Student).ThenInclude(s => s!.AcademicProgram)
                 .Include(ss => ss.Semester)
                 .Include(ss => ss.AcademicYear)
                 .FirstOrDefaultAsync(ss => ss.StudentSemesterId == id);
@@ -100,10 +104,6 @@ namespace StudentManagmentSystem.Controllers
             var academicYear = await context.AcademicYears
                 .FirstOrDefaultAsync(ay => ay.AcademicYearId == dto.AcademicYearId);
 
-            var student = await context.Students
-                .Include(s => s.AcademicProgram)
-                .FirstOrDefaultAsync(s => s.StudentId == dto.StudentId);
-
             if (academicYear == null)
             {
                 return BadRequest(new CommonApiResponse<StudentSemesterResponseDto>
@@ -114,6 +114,18 @@ namespace StudentManagmentSystem.Controllers
                 });
             }
 
+            var student = await context.Students
+                .Include(s => s.AcademicProgram)
+                .FirstOrDefaultAsync(s => s.StudentId == dto.StudentId);
+            if (student == null)
+            {
+                return BadRequest(new CommonApiResponse<StudentSemesterResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Student not found."
+                });
+            }
 
             var parts = academicYear.Year.Split("-");
             if (parts.Length != 2 ||
@@ -159,7 +171,7 @@ namespace StudentManagmentSystem.Controllers
                 });
             }
 
-            
+
 
             var duplicate = await context.StudentSemesters
             .FirstOrDefaultAsync(ss =>
@@ -196,6 +208,8 @@ namespace StudentManagmentSystem.Controllers
             await context.Entry(entity).Reference(ss => ss.Student).LoadAsync();
             if (entity.Student != null)
                 await context.Entry(entity.Student).Reference(s => s.User).LoadAsync();
+            if (entity.Student != null)
+                await context.Entry(entity.Student).Reference(s => s.AcademicProgram).LoadAsync();
             await context.Entry(entity).Reference(ss => ss.Semester).LoadAsync();
             await context.Entry(entity).Reference(ss => ss.AcademicYear).LoadAsync();
 
@@ -252,6 +266,8 @@ namespace StudentManagmentSystem.Controllers
             await context.Entry(existing).Reference(ss => ss.Student).LoadAsync();
             if (existing.Student != null)
                 await context.Entry(existing.Student).Reference(s => s.User).LoadAsync();
+            if (existing.Student != null)
+                await context.Entry(existing.Student).Reference(s => s.AcademicProgram).LoadAsync();
             await context.Entry(existing).Reference(ss => ss.Semester).LoadAsync();
             await context.Entry(existing).Reference(ss => ss.AcademicYear).LoadAsync();
 
@@ -269,6 +285,7 @@ namespace StudentManagmentSystem.Controllers
         {
             var entity = await context.StudentSemesters
                 .Include(ss => ss.Student).ThenInclude(s => s.User)
+                .Include(ss => ss.Student).ThenInclude(s => s!.AcademicProgram)
                 .Include(ss => ss.Semester)
                 .Include(ss => ss.AcademicYear)
                 .FirstOrDefaultAsync(ss => ss.StudentSemesterId == id);

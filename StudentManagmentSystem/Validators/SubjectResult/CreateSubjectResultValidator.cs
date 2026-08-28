@@ -7,7 +7,7 @@ namespace StudentManagmentSystem.Validators.SubjectResult
     {
         public CreateSubjectResultValidator()
         {
-            RuleFor(x => x.SemesterResultId).GreaterThan(0).WithMessage("A valid Semester Result ID is required.");
+            RuleFor(x => x.StudentSemesterId).GreaterThan(0).WithMessage("A valid Student Semester ID is required.");
             RuleFor(x => x.SemesterSubjectId).GreaterThan(0).WithMessage("A valid Semester Subject ID is required.");
             RuleFor(x => x.InternalMarks).GreaterThanOrEqualTo(0).WithMessage("Internal marks cannot be negative.");
             RuleFor(x => x.ExternalMarks).GreaterThanOrEqualTo(0).WithMessage("External marks cannot be negative.");

@@ -3660,7 +3660,7 @@
       },
       "CreateSubjectResultDto": {
         "required": [
-          "semesterResultId",
+          "studentSemesterId",
           "semesterSubjectId",
           "internalMarks",
           "externalMarks",
@@ -3672,7 +3672,7 @@
         ],
         "type": "object",
         "properties": {
-          "semesterResultId": {
+          "studentSemesterId": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
               "integer",
@@ -4578,7 +4578,7 @@
       },
       "UpdateSubjectResultDto": {
         "required": [
-          "semesterResultId",
+          "studentSemesterId",
           "semesterSubjectId",
           "internalMarks",
           "externalMarks",
@@ -4590,7 +4590,7 @@
         ],
         "type": "object",
         "properties": {
-          "semesterResultId": {
+          "studentSemesterId": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
               "integer",

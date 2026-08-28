@@ -15,5 +15,11 @@ export default function CreateProjectAllocationPage() {
     }
     return { error: result?.error || "The request could not be completed." };
   }
-  return <ProjectAllocationForm mode="create" onSubmitAction={handleSubmit} />;
+  return (
+    <ProjectAllocationForm
+      mode="create"
+      showEvaluationFields={false}
+      onSubmitAction={handleSubmit}
+    />
+  );
 }

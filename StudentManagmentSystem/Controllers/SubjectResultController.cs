@@ -27,9 +27,9 @@ namespace StudentManagmentSystem.Controllers
         private static SubjectResultResponseDto MapToDto(SubjectResult sr) => new SubjectResultResponseDto
         {
             SubjectResultId = sr.SubjectResultId,
-            SemesterResultId = sr.SemesterResultId,
-            StudentEnrollmentNumber = sr.SemesterResult?.StudentSemester?.Student?.EnrollmentNumber ?? string.Empty,
-            StudentName = sr.SemesterResult?.StudentSemester?.Student?.User?.UserName ?? string.Empty,
+            StudentSemesterId = sr.StudentSemesterId,
+            StudentEnrollmentNumber = sr.StudentSemester?.Student?.EnrollmentNumber ?? string.Empty,
+            StudentName = sr.StudentSemester?.Student?.User?.UserName ?? string.Empty,
             SemesterSubjectId = sr.SemesterSubjectId,
             SubjectName = sr.SemesterSubject?.Subject?.SubjectName ?? string.Empty,
             InternalMarks = sr.InternalMarks,
@@ -48,7 +48,7 @@ namespace StudentManagmentSystem.Controllers
         public async Task<ActionResult> GetAll()
         {
             var items = await context.SubjectResults
-                .Include(sr => sr.SemesterResult).ThenInclude(sr => sr.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
+                .Include(sr => sr.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
                 .Include(sr => sr.SemesterSubject).ThenInclude(ss => ss.Subject)
                 .Include(sr => sr.Grade)
                 .Select(sr => MapToDto(sr)).ToListAsync();
@@ -66,7 +66,7 @@ namespace StudentManagmentSystem.Controllers
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
             var sr = await context.SubjectResults
-                .Include(r => r.SemesterResult).ThenInclude(sr => sr.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
+                .Include(r => r.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
                 .Include(r => r.SemesterSubject).ThenInclude(ss => ss.Subject)
                 .Include(r => r.Grade)
                 .FirstOrDefaultAsync(r => r.SubjectResultId == id);
@@ -102,7 +102,7 @@ namespace StudentManagmentSystem.Controllers
                 });
 
             var duplicate = await context.SubjectResults.FirstOrDefaultAsync(sr =>
-                sr.SemesterResultId == dto.SemesterResultId && sr.SemesterSubjectId == dto.SemesterSubjectId);
+                sr.StudentSemesterId == dto.StudentSemesterId && sr.SemesterSubjectId == dto.SemesterSubjectId);
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<SubjectResultResponseDto>
                 {
@@ -113,7 +113,7 @@ namespace StudentManagmentSystem.Controllers
 
             var entity = new SubjectResult
             {
-                SemesterResultId = dto.SemesterResultId,
+                StudentSemesterId = dto.StudentSemesterId,
                 SemesterSubjectId = dto.SemesterSubjectId,
                 InternalMarks = dto.InternalMarks,
                 ExternalMarks = dto.ExternalMarks,
@@ -128,16 +128,12 @@ namespace StudentManagmentSystem.Controllers
             context.SubjectResults.Add(entity);
             await context.SaveChangesAsync();
 
-            await context.Entry(entity).Reference(sr => sr.SemesterResult).LoadAsync();
-            if (entity.SemesterResult != null)
+            await context.Entry(entity).Reference(sr => sr.StudentSemester).LoadAsync();
+            if (entity.StudentSemester != null)
             {
-                await context.Entry(entity.SemesterResult).Reference(sr => sr.StudentSemester).LoadAsync();
-                if (entity.SemesterResult.StudentSemester != null)
-                {
-                    await context.Entry(entity.SemesterResult.StudentSemester).Reference(ss => ss.Student).LoadAsync();
-                    if (entity.SemesterResult.StudentSemester.Student != null)
-                        await context.Entry(entity.SemesterResult.StudentSemester.Student).Reference(s => s.User).LoadAsync();
-                }
+                await context.Entry(entity.StudentSemester).Reference(ss => ss.Student).LoadAsync();
+                if (entity.StudentSemester.Student != null)
+                    await context.Entry(entity.StudentSemester.Student).Reference(s => s.User).LoadAsync();
             }
             await context.Entry(entity).Reference(sr => sr.SemesterSubject).LoadAsync();
             if (entity.SemesterSubject != null)
@@ -177,7 +173,7 @@ namespace StudentManagmentSystem.Controllers
 
             var duplicate = await context.SubjectResults.FirstOrDefaultAsync(sr =>
                 sr.SubjectResultId != id &&
-                sr.SemesterResultId == dto.SemesterResultId && sr.SemesterSubjectId == dto.SemesterSubjectId);
+                sr.StudentSemesterId == dto.StudentSemesterId && sr.SemesterSubjectId == dto.SemesterSubjectId);
             if (duplicate != null)
                 return BadRequest(new CommonApiResponse<SubjectResultResponseDto>
                 {
@@ -186,7 +182,7 @@ namespace StudentManagmentSystem.Controllers
                     Message = "A result already exists for this subject in the given semester result."
                 });
 
-            existing.SemesterResultId = dto.SemesterResultId;
+            existing.StudentSemesterId = dto.StudentSemesterId;
             existing.SemesterSubjectId = dto.SemesterSubjectId;
             existing.InternalMarks = dto.InternalMarks;
             existing.ExternalMarks = dto.ExternalMarks;
@@ -198,16 +194,12 @@ namespace StudentManagmentSystem.Controllers
             existing.UpdatedAt = DateTime.UtcNow;
             await context.SaveChangesAsync();
 
-            await context.Entry(existing).Reference(sr => sr.SemesterResult).LoadAsync();
-            if (existing.SemesterResult != null)
+            await context.Entry(existing).Reference(sr => sr.StudentSemester).LoadAsync();
+            if (existing.StudentSemester != null)
             {
-                await context.Entry(existing.SemesterResult).Reference(sr => sr.StudentSemester).LoadAsync();
-                if (existing.SemesterResult.StudentSemester != null)
-                {
-                    await context.Entry(existing.SemesterResult.StudentSemester).Reference(ss => ss.Student).LoadAsync();
-                    if (existing.SemesterResult.StudentSemester.Student != null)
-                        await context.Entry(existing.SemesterResult.StudentSemester.Student).Reference(s => s.User).LoadAsync();
-                }
+                await context.Entry(existing.StudentSemester).Reference(ss => ss.Student).LoadAsync();
+                if (existing.StudentSemester.Student != null)
+                    await context.Entry(existing.StudentSemester.Student).Reference(s => s.User).LoadAsync();
             }
             await context.Entry(existing).Reference(sr => sr.SemesterSubject).LoadAsync();
             if (existing.SemesterSubject != null)
@@ -227,7 +219,7 @@ namespace StudentManagmentSystem.Controllers
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
             var entity = await context.SubjectResults
-                .Include(sr => sr.SemesterResult).ThenInclude(sr => sr.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
+                .Include(sr => sr.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
                 .Include(sr => sr.SemesterSubject).ThenInclude(ss => ss.Subject)
                 .Include(sr => sr.Grade)
                 .FirstOrDefaultAsync(sr => sr.SubjectResultId == id);

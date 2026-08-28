@@ -1,41 +1,62 @@
 import AdminForm from "@/components/AdminForm";
 import Link from "next/link";
-import { getAdminOptions } from "@/lib/admin-options";
+import { GetAllFacultys } from "@/service/faculty.service";
+import { GetAllProjects } from "@/service/project.service";
+import { GetAllStudentSemesters } from "@/service/studentSemester.service";
 
 type ProjectAllocationFormProps = {
   initialData?: Record<string, any>;
   onSubmitAction: (formData: FormData) => Promise<void | { error?: string }>;
   mode: "create" | "edit";
+  showEvaluationFields?: boolean;
 };
+type SelectOption = { value: number; label: string };
 const inputClass =
-  "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100";
+  "mt-2 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100";
 
 export default async function ProjectAllocationForm({
   initialData = {},
   onSubmitAction,
   mode,
+  showEvaluationFields,
 }: ProjectAllocationFormProps) {
-  const editing = mode === "edit";
-  const projectIdOptions = await getAdminOptions("Project");
-  const studentIdOptions = await getAdminOptions("Student");
-  const facultyIdOptions = await getAdminOptions("Faculty");
+  const editing = showEvaluationFields ?? (mode === "edit" || Boolean(initialData.allocationId));
+  const projects = await GetAllProjects();
+  const studentSemesters = await GetAllStudentSemesters();
+  const faculties = await GetAllFacultys();
+  const projectIdOptions: SelectOption[] = (projects?.data ?? []).map((record: any) => ({
+    value: Number(record.projectId),
+    label: record.title || `Record ${record.projectId}`,
+  }));
+  const studentIdOptions: SelectOption[] = (studentSemesters?.data ?? []).map((record: any) => ({
+    value: Number(record.studentSemesterId),
+    label: [record.studentName, record.academicProgramName, record.semesterName]
+      .filter(Boolean)
+      .join(" - ") || `Record ${record.studentSemesterId}`,
+  }));
+  const facultyIdOptions: SelectOption[] = (faculties?.data ?? []).map((record: any) => ({
+    value: Number(record.facultyId),
+    label: record.userName || record.employeeNumber || `Record ${record.facultyId}`,
+  }));
   return (
     <section className="mx-auto max-w-4xl space-y-7">
       <header className="border-b border-slate-200 pb-6">
         <Link
           href="/admin/project-allocation"
-          className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+          className="text-sm font-semibold text-emerald-950 hover:text-emerald-900"
         >
           &lt;- Back to project allocations
         </Link>
-        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">
+        <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-950">
           {editing ? "Edit record" : "New record"}
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">
           {editing ? "Edit Project Allocations" : "Add Project Allocations"}
         </h1>
       </header>
-              preserveValuesOnError={!editing}
+      <AdminForm
+        action={onSubmitAction}
+        preserveValuesOnError={!editing}
         className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
       >
         <div className="grid gap-5 sm:grid-cols-2">
@@ -103,24 +124,36 @@ export default async function ProjectAllocationForm({
               defaultValue={initialData.finalScore ?? ""}
             />
           </label>
-          <label className="text-sm font-medium text-slate-700">
-            Grade
-            <input
-              className={inputClass}
-              name="grade"
-              type="text"
-              defaultValue={initialData.grade ?? ""}
-            />
-          </label>
-          <label className="text-sm font-medium text-slate-700">
-            Status
-            <input
-              className={inputClass}
-              name="status"
-              type="text"
-              defaultValue={initialData.status ?? ""}
-            />
-          </label>
+          {editing ? (
+            <>
+              <label className="text-sm font-medium text-slate-700">
+                Grade
+                <input
+                  className={inputClass}
+                  name="grade"
+                  type="text"
+                  defaultValue={initialData.grade ?? ""}
+                />
+              </label>
+              <label className="text-sm font-medium text-slate-700">
+                Status
+                <select
+                  className={inputClass}
+                  name="status"
+                  required
+                  defaultValue={initialData.status ?? "Pending"}
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </label>
+            </>
+          ) : (
+            <>
+              <input type="hidden" name="grade" value="N/A" />
+              <input type="hidden" name="status" value="Pending" />
+            </>
+          )}
           <label className="text-sm font-medium text-slate-700">
             Repository URL
             <input
@@ -139,7 +172,7 @@ export default async function ProjectAllocationForm({
             Cancel
           </Link>
           <button
-            className="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700"
+            className="rounded-lg bg-emerald-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-emerald-900"
             type="submit"
           >
             {editing ? "Save changes" : "Create record"}
