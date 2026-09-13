@@ -16,6 +16,9 @@ namespace StudentManagmentSystem.Dto
         [Required]
         public decimal EarnedCredits { get; set; }
 
+        [Required]
+        public decimal CreditPointsEarned { get; set; }
+
         [Required, MaxLength(50)]
         public string ResultStatus { get; set; } = string.Empty;
     }
@@ -34,6 +37,9 @@ namespace StudentManagmentSystem.Dto
         [Required]
         public decimal EarnedCredits { get; set; }
 
+        [Required]
+        public decimal CreditPointsEarned { get; set; }
+
         [Required, MaxLength(50)]
         public string ResultStatus { get; set; } = string.Empty;
     }
@@ -47,6 +53,7 @@ namespace StudentManagmentSystem.Dto
         public decimal SGPA { get; set; }
         public decimal TotalCredits { get; set; }
         public decimal EarnedCredits { get; set; }
+        public decimal CreditPointsEarned { get; set; }
         public string ResultStatus { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

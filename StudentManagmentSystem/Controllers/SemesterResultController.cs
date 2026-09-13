@@ -33,6 +33,7 @@ namespace StudentManagmentSystem.Controllers
             SGPA = sr.SGPA,
             TotalCredits = sr.TotalCredits,
             EarnedCredits = sr.EarnedCredits,
+            CreditPointsEarned = sr.CreditPointsEarned,
             ResultStatus = sr.ResultStatus,
             CreatedAt = sr.CreatedAt,
             UpdatedAt = sr.UpdatedAt

@@ -189,12 +189,11 @@ namespace StudentManagmentSystem.Data
                         "CK_SubjectResult_Marks",
                         "[InternalMarks] >= 0 AND " +
                         "[ExternalMarks] >= 0 AND " +
-                        "[PracticalMarks] >= 0 AND " +
-                        "[TotalMarks] >= 0");
+                        "[PracticalMarks] >= 0");
 
                     t.HasCheckConstraint(
-                        "CK_SubjectResult_CreditsEarned",
-                        "[CreditsEarned] >= 0");
+                        "CK_SubjectResult_GradePoints",
+                        "[GradePoints] >= 0");
                 });
 
                 entity.HasOne(sr => sr.SemesterSubject)

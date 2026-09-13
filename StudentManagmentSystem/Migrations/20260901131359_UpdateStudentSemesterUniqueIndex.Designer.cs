@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagmentSystem.Data;
 
@@ -11,9 +12,11 @@ using StudentManagmentSystem.Data;
 namespace StudentManagmentSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260901131359_UpdateStudentSemesterUniqueIndex")]
+    partial class UpdateStudentSemesterUniqueIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -726,10 +729,6 @@ namespace StudentManagmentSystem.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("CreditPointsEarned")
-                        .HasPrecision(8, 2)
-                        .HasColumnType("decimal(8,2)");
-
                     b.Property<decimal>("EarnedCredits")
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
@@ -952,16 +951,16 @@ namespace StudentManagmentSystem.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("CreditsEarned")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
                     b.Property<decimal>("ExternalMarks")
                         .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
                     b.Property<int>("GradeId")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("GradePoints")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
 
                     b.Property<decimal>("InternalMarks")
                         .HasPrecision(5, 2)
@@ -998,7 +997,7 @@ namespace StudentManagmentSystem.Migrations
 
                     b.ToTable("SubjectResults", t =>
                         {
-                            t.HasCheckConstraint("CK_SubjectResult_GradePoints", "[GradePoints] >= 0");
+                            t.HasCheckConstraint("CK_SubjectResult_CreditsEarned", "[CreditsEarned] >= 0");
 
                             t.HasCheckConstraint("CK_SubjectResult_Marks", "[InternalMarks] >= 0 AND [ExternalMarks] >= 0 AND [PracticalMarks] >= 0");
                         });

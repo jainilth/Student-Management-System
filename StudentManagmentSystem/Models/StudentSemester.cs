@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagmentSystem.Models
 {
-    [Index(nameof(StudentId), nameof(SemesterId), nameof(AcademicYearId), IsUnique = true)]
+    [Index(nameof(StudentId), nameof(SemesterId), IsUnique = true)]
     [Index(nameof(AcademicYearId))]
     [Index(nameof(SemesterId))]
     public class StudentSemester

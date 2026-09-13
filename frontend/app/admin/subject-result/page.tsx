@@ -72,6 +72,9 @@ export default async function SubjectResultListPage() {
                   <th className="px-5 py-3 font-medium">Internal marks</th>
                   <th className="px-5 py-3 font-medium">External marks</th>
                   <th className="px-5 py-3 font-medium">Practical marks</th>
+                  <th className="px-5 py-3 font-medium">Grade</th>
+                  <th className="px-5 py-3 font-medium">Grade Point</th>
+                  <th className="px-5 py-3 font-medium">Result Status</th>
                   <th className="px-5 py-3 text-right font-medium">Actions</th>
                 </tr>
               </thead>
@@ -98,6 +101,21 @@ export default async function SubjectResultListPage() {
                     </td>
                     <td className="px-5 py-4 text-slate-600">
                       {String(record.practicalMarks ?? "-")}
+                    </td>
+                    <td className="px-5 py-4 text-slate-600">
+                      {String(record.gradeCode ?? "-")}
+                    </td>
+                    <td className="px-5 py-4 text-slate-600">
+                      {String(record.gradePoint ?? "-")}
+                    </td>
+                    <td className="px-5 py-4">
+                      <span className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${
+                        record.resultStatus === 'Pass' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {String(record.resultStatus ?? "-")}
+                      </span>
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex justify-end gap-3">

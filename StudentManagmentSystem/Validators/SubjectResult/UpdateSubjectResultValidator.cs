@@ -9,14 +9,9 @@ namespace StudentManagmentSystem.Validators.SubjectResult
         {
             RuleFor(x => x.StudentSemesterId).GreaterThan(0).WithMessage("A valid Student Semester ID is required.");
             RuleFor(x => x.SemesterSubjectId).GreaterThan(0).WithMessage("A valid Semester Subject ID is required.");
-            RuleFor(x => x.InternalMarks).GreaterThanOrEqualTo(0).WithMessage("Internal marks cannot be negative.");
-            RuleFor(x => x.ExternalMarks).GreaterThanOrEqualTo(0).WithMessage("External marks cannot be negative.");
-            RuleFor(x => x.PracticalMarks).GreaterThanOrEqualTo(0).WithMessage("Practical marks cannot be negative.");
-            RuleFor(x => x.TotalMarks).GreaterThanOrEqualTo(0).WithMessage("Total marks cannot be negative.");
-            RuleFor(x => x.GradeId).GreaterThan(0).WithMessage("A valid Grade ID is required.");
-            RuleFor(x => x.CreditsEarned).GreaterThanOrEqualTo(0).WithMessage("Credits earned cannot be negative.");
-            RuleFor(x => x.ResultStatus).NotEmpty().WithMessage("Result status is required.")
-                .MaximumLength(50).WithMessage("Result status cannot exceed 50 characters.");
+            RuleFor(x => x.InternalMarks).InclusiveBetween(0, 30).WithMessage("Internal marks must be in the range of 0 to 30.");
+            RuleFor(x => x.ExternalMarks).InclusiveBetween(0, 50).WithMessage("External marks must be in the range of 0 to 50.");
+            RuleFor(x => x.PracticalMarks).InclusiveBetween(0, 20).WithMessage("Practical marks must be in the range of 0 to 20.");
         }
     }
 }

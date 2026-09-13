@@ -55,4 +55,11 @@ namespace StudentManagmentSystem.Dto
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
+
+    public class AcademicProgramQueryParameters:QueryParameters
+    {
+        public string? ProgramName { get; set; }
+        public string ? ProgramCode { get; set; }
+
+    }
 }

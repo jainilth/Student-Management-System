@@ -25,13 +25,11 @@ namespace StudentManagmentSystem.Models
         [Precision(5, 2)]
         public decimal PracticalMarks { get; set; }
 
-        [Precision(6, 2)]
-        public decimal TotalMarks { get; set; }
         [ForeignKey(nameof(Grade))]
         public int GradeId { get; set; }
 
         [Precision(5, 2)]
-        public decimal CreditsEarned { get; set; }
+        public decimal GradePoints { get; set; }
 
         [Required, MaxLength(50)]
         public string ResultStatus { get; set; } = string.Empty;

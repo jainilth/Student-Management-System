@@ -1,6 +1,5 @@
 import AdminForm from "@/components/AdminForm";
 import Link from "next/link";
-import { GetAllGrades } from "@/service/grade.service";
 import { GetAllStudentSemesters } from "@/service/studentSemester.service";
 import { GetAllSemesterSubjects } from "@/service/semesterSubject.service";
 
@@ -21,10 +20,9 @@ export default async function SubjectResultForm({
   const editing = mode === "edit";
   const studentSemesters = await GetAllStudentSemesters();
   const semesterSubjects = await GetAllSemesterSubjects();
-  const grades = await GetAllGrades();
   const studentSemesterIdOptions: SelectOption[] = (studentSemesters?.data ?? []).map((record: any) => ({
     value: Number(record.studentSemesterId),
-    label:[record.studentName,record.academicProgramName, record.semesterName]
+    label: [record.studentName, record.academicProgramName, record.semesterName]
       .filter(Boolean)
       .join(" - ") || `Record ${record.studentSemesterId}`,
   }));
@@ -33,10 +31,6 @@ export default async function SubjectResultForm({
     label: [record.subjectName, record.programName, record.semesterName]
       .filter(Boolean)
       .join(" - ") || `Record ${record.semesterSubjectId}`,
-  }));
-  const gradeIdOptions: SelectOption[] = (grades?.data ?? []).map((record: any) => ({
-    value: Number(record.gradeId),
-    label: record.gradeCode || record.gradeName || `Record ${record.gradeId}`,
   }));
   return (
     <section className="mx-auto max-w-4xl space-y-7">
@@ -97,7 +91,7 @@ export default async function SubjectResultForm({
             </select>
           </label>
           <label className="text-sm font-medium text-slate-700">
-            Internal marks
+            Internal marks (Max 30)
             <input
               className={inputClass}
               name="internalMarks"
@@ -107,7 +101,7 @@ export default async function SubjectResultForm({
             />
           </label>
           <label className="text-sm font-medium text-slate-700">
-            External marks
+            External marks (Max 50)
             <input
               className={inputClass}
               name="externalMarks"
@@ -117,60 +111,13 @@ export default async function SubjectResultForm({
             />
           </label>
           <label className="text-sm font-medium text-slate-700">
-            Practical marks
+            Practical marks (Max 20)
             <input
               className={inputClass}
               name="practicalMarks"
               type="number"
               step="any"
               defaultValue={initialData.practicalMarks ?? ""}
-            />
-          </label>
-          <label className="text-sm font-medium text-slate-700">
-            Total marks
-            <input
-              className={inputClass}
-              name="totalMarks"
-              type="number"
-              step="any"
-              defaultValue={initialData.totalMarks ?? ""}
-            />
-          </label>
-          <label className="text-sm font-medium text-slate-700">
-            Grade
-            <select
-              className={inputClass}
-              name="gradeId"
-              required
-              defaultValue={initialData.gradeId ?? ""}
-            >
-              <option value="" disabled>
-                Select grade
-              </option>
-              {gradeIdOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="text-sm font-medium text-slate-700">
-            Credits earned
-            <input
-              className={inputClass}
-              name="creditsEarned"
-              type="number"
-              step="any"
-              defaultValue={initialData.creditsEarned ?? ""}
-            />
-          </label>
-          <label className="text-sm font-medium text-slate-700">
-            Result status
-            <input
-              className={inputClass}
-              name="resultStatus"
-              type="text"
-              defaultValue={initialData.resultStatus ?? ""}
             />
           </label>
         </div>

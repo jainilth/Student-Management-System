@@ -3459,6 +3459,7 @@
           "sgpa",
           "totalCredits",
           "earnedCredits",
+          "creditPointsEarned",
           "resultStatus"
         ],
         "type": "object",
@@ -3488,6 +3489,14 @@
             "format": "double"
           },
           "earnedCredits": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "creditPointsEarned": {
             "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
             "type": [
               "number",
@@ -3664,11 +3673,7 @@
           "semesterSubjectId",
           "internalMarks",
           "externalMarks",
-          "practicalMarks",
-          "totalMarks",
-          "gradeId",
-          "creditsEarned",
-          "resultStatus"
+          "practicalMarks"
         ],
         "type": "object",
         "properties": {
@@ -3711,34 +3716,6 @@
               "string"
             ],
             "format": "double"
-          },
-          "totalMarks": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": [
-              "number",
-              "string"
-            ],
-            "format": "double"
-          },
-          "gradeId": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "creditsEarned": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": [
-              "number",
-              "string"
-            ],
-            "format": "double"
-          },
-          "resultStatus": {
-            "maxLength": 50,
-            "type": "string"
           }
         }
       },
@@ -4377,6 +4354,7 @@
           "sgpa",
           "totalCredits",
           "earnedCredits",
+          "creditPointsEarned",
           "resultStatus"
         ],
         "type": "object",
@@ -4406,6 +4384,14 @@
             "format": "double"
           },
           "earnedCredits": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "creditPointsEarned": {
             "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
             "type": [
               "number",
@@ -4582,11 +4568,7 @@
           "semesterSubjectId",
           "internalMarks",
           "externalMarks",
-          "practicalMarks",
-          "totalMarks",
-          "gradeId",
-          "creditsEarned",
-          "resultStatus"
+          "practicalMarks"
         ],
         "type": "object",
         "properties": {
@@ -4629,34 +4611,6 @@
               "string"
             ],
             "format": "double"
-          },
-          "totalMarks": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": [
-              "number",
-              "string"
-            ],
-            "format": "double"
-          },
-          "gradeId": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "creditsEarned": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": [
-              "number",
-              "string"
-            ],
-            "format": "double"
-          },
-          "resultStatus": {
-            "maxLength": 50,
-            "type": "string"
           }
         }
       },

@@ -18,18 +18,6 @@ namespace StudentManagmentSystem.Dto
 
         [Required]
         public decimal PracticalMarks { get; set; }
-
-        [Required]
-        public decimal TotalMarks { get; set; }
-
-        [Required]
-        public int GradeId { get; set; }
-
-        [Required]
-        public decimal CreditsEarned { get; set; }
-
-        [Required, MaxLength(50)]
-        public string ResultStatus { get; set; } = string.Empty;
     }
 
     public class UpdateSubjectResultDto
@@ -48,18 +36,6 @@ namespace StudentManagmentSystem.Dto
 
         [Required]
         public decimal PracticalMarks { get; set; }
-
-        [Required]
-        public decimal TotalMarks { get; set; }
-
-        [Required]
-        public int GradeId { get; set; }
-
-        [Required]
-        public decimal CreditsEarned { get; set; }
-
-        [Required, MaxLength(50)]
-        public string ResultStatus { get; set; } = string.Empty;
     }
 
     public class SubjectResultResponseDto
@@ -69,14 +45,16 @@ namespace StudentManagmentSystem.Dto
         public string StudentEnrollmentNumber { get; set; } = string.Empty;
         public string StudentName { get; set; } = string.Empty;
         public int SemesterSubjectId { get; set; }
+        public string SubjectCode { get; set; } = string.Empty;
         public string SubjectName { get; set; } = string.Empty;
         public decimal InternalMarks { get; set; }
         public decimal ExternalMarks { get; set; }
         public decimal PracticalMarks { get; set; }
-        public decimal TotalMarks { get; set; }
         public int GradeId { get; set; }
         public string GradeCode { get; set; } = string.Empty;
-        public decimal CreditsEarned { get; set; }
+        public decimal GradePoint { get; set; }
+        public decimal GradePoints { get; set; }
+        public decimal CreditPoint { get; set; }
         public string ResultStatus { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

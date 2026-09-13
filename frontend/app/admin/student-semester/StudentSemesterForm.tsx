@@ -33,7 +33,9 @@ export default async function StudentSemesterForm({
   const academicYears = await GetAllAcademicYears();
   const studentIdOptions: SelectOption[] = (students?.data ?? []).map((record: any) => ({
     value: Number(record.studentId),
-    label: record.userName || record.enrollmentNumber || `Student ${record.studentId}`,
+    label: [record.userName, record.programName]
+      .filter(Boolean)
+      .join(" - ") || `Record ${record.semesterSubjectId}`,
   }));
   const semesterIdOptions: SelectOption[] = (semesters?.data ?? []).map((record: any) => ({
     value: Number(record.semesterId),
@@ -43,6 +45,10 @@ export default async function StudentSemesterForm({
     value: Number(record.academicYearId),
     label: record.year || `Record ${record.academicYearId}`,
   }));
+  const enrollmentDateValue = initialData.enrollmentDate
+    ? String(initialData.enrollmentDate).split("T")[0]
+    : "";
+
   return (
     <section className="mx-auto max-w-4xl space-y-7">
       <header className="border-b border-slate-200 pb-6">
@@ -126,7 +132,7 @@ export default async function StudentSemesterForm({
               name="enrollmentDate"
               type="date"
               step="any"
-              defaultValue={initialData.enrollmentDate ?? ""}
+              defaultValue={enrollmentDateValue}
             />
           </label>
           <label className="text-sm font-medium text-slate-700">

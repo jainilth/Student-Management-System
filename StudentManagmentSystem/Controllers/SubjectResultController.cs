@@ -31,14 +31,16 @@ namespace StudentManagmentSystem.Controllers
             StudentEnrollmentNumber = sr.StudentSemester?.Student?.EnrollmentNumber ?? string.Empty,
             StudentName = sr.StudentSemester?.Student?.User?.UserName ?? string.Empty,
             SemesterSubjectId = sr.SemesterSubjectId,
+            SubjectCode = sr.SemesterSubject?.Subject?.SubjectCode ?? string.Empty,
             SubjectName = sr.SemesterSubject?.Subject?.SubjectName ?? string.Empty,
             InternalMarks = sr.InternalMarks,
             ExternalMarks = sr.ExternalMarks,
             PracticalMarks = sr.PracticalMarks,
-            TotalMarks = sr.TotalMarks,
             GradeId = sr.GradeId,
             GradeCode = sr.Grade?.GradeCode ?? string.Empty,
-            CreditsEarned = sr.CreditsEarned,
+            GradePoint = sr.Grade?.GradePoint ?? 0,
+            GradePoints = sr.GradePoints,
+            CreditPoint = (sr.Grade?.GradePoint ?? 0) * sr.GradePoints,
             ResultStatus = sr.ResultStatus,
             CreatedAt = sr.CreatedAt,
             UpdatedAt = sr.UpdatedAt
@@ -48,8 +50,8 @@ namespace StudentManagmentSystem.Controllers
         public async Task<ActionResult> GetAll()
         {
             var items = await context.SubjectResults
-                .Include(sr => sr.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
-                .Include(sr => sr.SemesterSubject).ThenInclude(ss => ss.Subject)
+                .Include(sr => sr.StudentSemester).ThenInclude(ss => ss != null ? ss.Student : null).ThenInclude(s => s != null ? s.User : null)
+                .Include(sr => sr.SemesterSubject).ThenInclude(ss => ss != null ? ss.Subject : null)
                 .Include(sr => sr.Grade)
                 .Select(sr => MapToDto(sr)).ToListAsync();
 
@@ -66,8 +68,8 @@ namespace StudentManagmentSystem.Controllers
         public async Task<ActionResult> GetById([FromRoute] int id)
         {
             var sr = await context.SubjectResults
-                .Include(r => r.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
-                .Include(r => r.SemesterSubject).ThenInclude(ss => ss.Subject)
+                .Include(r => r.StudentSemester).ThenInclude(ss => ss != null ? ss.Student : null).ThenInclude(s => s != null ? s.User : null)
+                .Include(r => r.SemesterSubject).ThenInclude(ss => ss != null ? ss.Subject : null)
                 .Include(r => r.Grade)
                 .FirstOrDefaultAsync(r => r.SubjectResultId == id);
 
@@ -111,6 +113,32 @@ namespace StudentManagmentSystem.Controllers
                     Message = "A result already exists for this subject in the given semester result."
                 });
 
+
+
+            var totalMarks = dto.InternalMarks + dto.PracticalMarks + dto.ExternalMarks;
+
+            var grade = await context.Grades.SingleOrDefaultAsync(g => totalMarks >= g.MinMarks && totalMarks <= g.MaxMarks);
+
+            if (grade == null)
+            {
+                return BadRequest(new CommonApiResponse<SubjectResultResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Grade not found."
+                });
+
+            }
+            var resultStatus = "";
+            if (grade.GradePoint == 0)
+            {
+                resultStatus = "Fail";
+            }
+            else
+            {
+                resultStatus = "Pass";
+            }
+
             var entity = new SubjectResult
             {
                 StudentSemesterId = dto.StudentSemesterId,
@@ -118,10 +146,9 @@ namespace StudentManagmentSystem.Controllers
                 InternalMarks = dto.InternalMarks,
                 ExternalMarks = dto.ExternalMarks,
                 PracticalMarks = dto.PracticalMarks,
-                TotalMarks = dto.TotalMarks,
-                GradeId = dto.GradeId,
-                CreditsEarned = dto.CreditsEarned,
-                ResultStatus = dto.ResultStatus,
+                GradeId = grade.GradeId,
+                GradePoints = grade.GradePoint,
+                ResultStatus = resultStatus,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
@@ -182,15 +209,39 @@ namespace StudentManagmentSystem.Controllers
                     Message = "A result already exists for this subject in the given semester result."
                 });
 
+            var totalMarks = dto.InternalMarks + dto.PracticalMarks + dto.ExternalMarks;
+
+            var grade = await context.Grades.SingleOrDefaultAsync(g => totalMarks >= g.MinMarks && totalMarks <= g.MaxMarks);
+
+            if (grade == null)
+            {
+                return BadRequest(new CommonApiResponse<SubjectResultResponseDto>
+                {
+                    Success = false,
+                    StatusCode = 400,
+                    Message = "Grade not found."
+                });
+
+            }
+
+            var resultStatus = "";
+            if (grade.GradePoint == 0)
+            {
+                resultStatus = "Fail";
+            }
+            else
+            {
+                resultStatus = "Pass";
+            }
+
             existing.StudentSemesterId = dto.StudentSemesterId;
             existing.SemesterSubjectId = dto.SemesterSubjectId;
             existing.InternalMarks = dto.InternalMarks;
             existing.ExternalMarks = dto.ExternalMarks;
             existing.PracticalMarks = dto.PracticalMarks;
-            existing.TotalMarks = dto.TotalMarks;
-            existing.GradeId = dto.GradeId;
-            existing.CreditsEarned = dto.CreditsEarned;
-            existing.ResultStatus = dto.ResultStatus;
+            existing.GradeId = grade.GradeId;
+            existing.GradePoints = grade.GradePoint;
+            existing.ResultStatus = resultStatus;
             existing.UpdatedAt = DateTime.UtcNow;
             await context.SaveChangesAsync();
 
@@ -219,8 +270,8 @@ namespace StudentManagmentSystem.Controllers
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
             var entity = await context.SubjectResults
-                .Include(sr => sr.StudentSemester).ThenInclude(ss => ss.Student).ThenInclude(s => s.User)
-                .Include(sr => sr.SemesterSubject).ThenInclude(ss => ss.Subject)
+                .Include(sr => sr.StudentSemester).ThenInclude(ss => ss != null ? ss.Student : null).ThenInclude(s => s != null ? s.User : null)
+                .Include(sr => sr.SemesterSubject).ThenInclude(ss => ss != null ? ss.Subject : null)
                 .Include(sr => sr.Grade)
                 .FirstOrDefaultAsync(sr => sr.SubjectResultId == id);
 

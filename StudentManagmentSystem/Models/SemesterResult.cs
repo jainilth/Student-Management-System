@@ -22,6 +22,9 @@ namespace StudentManagmentSystem.Models
         [Precision(5, 2)]
         public decimal EarnedCredits { get; set; }
 
+        [Precision(8, 2)]
+        public decimal CreditPointsEarned { get; set; }
+
         [Required, MaxLength(50)]
         public string ResultStatus { get; set; } = string.Empty;
 

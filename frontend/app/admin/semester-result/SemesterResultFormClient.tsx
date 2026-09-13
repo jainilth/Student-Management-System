@@ -37,7 +37,7 @@ export default function SemesterResultFormClient({
             )
             .reduce((total, record) => total + Number(record.credits || 0), 0)
         : "";
-
+    
     return (
         <AdminForm
             action={onSubmitAction}

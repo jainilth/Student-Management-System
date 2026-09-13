@@ -71,6 +71,7 @@ export default async function SemesterResultListPage() {
                   <th className="px-5 py-3 font-medium">SGPA</th>
                   <th className="px-5 py-3 font-medium">Total credits</th>
                   <th className="px-5 py-3 font-medium">Earned credits</th>
+                  <th className="px-5 py-3 font-medium">Credit Points Earned</th>
                   <th className="px-5 py-3 font-medium">Result status</th>
                   <th className="px-5 py-3 text-right font-medium">Actions</th>
                 </tr>
@@ -95,6 +96,9 @@ export default async function SemesterResultListPage() {
                     </td>
                     <td className="px-5 py-4 text-slate-600">
                       {String(record.earnedCredits ?? "-")}
+                    </td>
+                    <td className="px-5 py-4 text-slate-600">
+                      {String(record.creditPointsEarned ?? "-")}
                     </td>
                     <td className="px-5 py-4 text-slate-600">
                       {String(record.resultStatus ?? "-")}
